@@ -12,16 +12,18 @@ public class Combatant {
     private int courage;
     private int xPos;
     private int yPos;
+    private Vector330Class movementDir;
     private java.awt.Color team;
 
     public Combatant(){
         this.size = 10;
-        this.speed = 5;
+        this.speed = 10;
         this.strength = 10;
         this.courage = 50;
         this.xPos = (int) (Math.random() * (windowWidth-100));
         this.yPos = (int) (Math.random() * (windowHeight-100));
         this.team = Color.RED;
+        this.movementDir = new Vector330Class(1, 1);
     }
 
     public Combatant(int team){
@@ -29,7 +31,8 @@ public class Combatant {
         this.speed = 5;
         this.strength = 10;
         this.courage = 50;
-        if( team == 1) {
+        this.movementDir = new Vector330Class(1, 1);
+        if(team == 1) {
             int min = (int) (windowHeight * (2.0/3.0));
             int max = windowHeight-20;
             this.team = Color.RED;
@@ -62,6 +65,14 @@ public class Combatant {
             Combatant.g.setColor(this.team);
             Combatant.g.fillOval( (this.getX() - this.size), (this.getY() - this.size),
                     (2 * this.size), (2 * this.size) );
+        }
+    }
+
+    public void move(){
+        int speedToken = (int) (Math.random() * 100);
+        if(this.speed > speedToken) {
+            this.xPos = this.getX() + ((int) this.movementDir.getX());
+            this.yPos = this.getY() + ((int) this.movementDir.getY());
         }
     }
 

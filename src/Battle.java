@@ -8,6 +8,7 @@ public class Battle {
     public static void main(String[] args){
 
         int armySize = 10;
+        int numRounds = 0;
         Combatant[] redTeam = new Combatant[armySize];
         Combatant[] blueTeam = new Combatant[armySize];
 
@@ -28,6 +29,18 @@ public class Battle {
             blueTeam[i].draw();
         }
         battlefield.copyGraphicsToScreen();
+
+        while(numRounds < 2000){
+            battlefield.setBackground(Color.LIGHT_GRAY);
+            for(int i = 0; i < armySize; i++){
+                redTeam[i].move();
+                blueTeam[i].move();
+                redTeam[i].draw();
+                blueTeam[i].draw();
+            }
+            battlefield.copyGraphicsToScreen();
+            numRounds++;
+        }
     }
 
     public static Combatant[] GenerateArmy(int team, int armySize){
