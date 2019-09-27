@@ -10,8 +10,7 @@ public class Combatant {
     private int speed;
     private int strength;
     private int courage;
-    private int xPos;
-    private int yPos;
+    private Vector330Class currPos;
     private Vector330Class movementDir;
     private java.awt.Color team;
 
@@ -20,8 +19,7 @@ public class Combatant {
         this.speed = 10;
         this.strength = 10;
         this.courage = 50;
-        this.xPos = (int) (Math.random() * (windowWidth-100));
-        this.yPos = (int) (Math.random() * (windowHeight-100));
+        this.currPos = new Vector330Class(Math.random() * (windowWidth-100), Math.random() * (windowHeight-100));
         this.team = Color.RED;
         this.movementDir = new Vector330Class(1, 1);
     }
@@ -36,24 +34,22 @@ public class Combatant {
             int min = (int) (windowHeight * (2.0/3.0));
             int max = windowHeight-20;
             this.team = Color.RED;
-            this.xPos = (int) (Math.random() * (windowWidth-40)) + 20;
-            this.yPos = (int) (Math.random() * ((max - min) + 1)) + min;
+            this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) + 20, (Math.random() * ((max - min) + 1)) + min);
         }
         else{
             int min = 20;
             int max = (int) (windowHeight * (1.0/3.0));
             this.team = Color.BLUE;
-            this.xPos = (int) (Math.random() * (windowWidth-40)) +20;
-            this.yPos = (int) (Math.random() * ((max - min) + 1)) + min;
+            this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) +20, (Math.random() * ((max - min) + 1)) + min);
         }
     }
 
     public int getX(){
-        return this.xPos;
+        return this.currPos.getXint();
     }
 
     public int getY(){
-        return this.yPos;
+        return this.currPos.getYint();
     }
 
     public static void setWindowWidth( int width ) { Combatant.windowWidth = width; }
@@ -68,11 +64,13 @@ public class Combatant {
         }
     }
 
-    public void move(){
+    public void move(Combatant[] enemyArmy){
         int speedToken = (int) (Math.random() * 100);
+        Vector330Class d = enemyArmy[0].currPos.subtract(this.currPos);
+        this.movementDir = d.normalize().scale(this.speed);
         if(this.speed > speedToken) {
-            this.xPos = this.getX() + ((int) this.movementDir.getX());
-            this.yPos = this.getY() + ((int) this.movementDir.getY());
+            this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
+            this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
         }
     }
 
