@@ -3,8 +3,8 @@ import java.awt.*;
 public class Combatant {
 
     private static Graphics2D g = null;
-    private static int windowWidth = 800;
-    private static int windowHeight = 600;
+    private static int windowWidth = 100;
+    private static int windowHeight = 100;
 
     private int size;
     private int speed;
@@ -22,6 +22,27 @@ public class Combatant {
         this.xPos = (int) (Math.random() * (windowWidth-100));
         this.yPos = (int) (Math.random() * (windowHeight-100));
         this.team = Color.RED;
+    }
+
+    public Combatant(int team){
+        this.size = 10;
+        this.speed = 5;
+        this.strength = 10;
+        this.courage = 50;
+        if( team == 1) {
+            int min = (int) (windowHeight * (2.0/3.0));
+            int max = windowHeight-20;
+            this.team = Color.RED;
+            this.xPos = (int) (Math.random() * (windowWidth-40)) + 20;
+            this.yPos = (int) (Math.random() * ((max - min) + 1)) + min;
+        }
+        else{
+            int min = 20;
+            int max = (int) (windowHeight * (1.0/3.0));
+            this.team = Color.BLUE;
+            this.xPos = (int) (Math.random() * (windowWidth-40)) +20;
+            this.yPos = (int) (Math.random() * ((max - min) + 1)) + min;
+        }
     }
 
     public int getX(){

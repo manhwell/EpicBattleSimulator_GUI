@@ -7,8 +7,9 @@ public class Battle {
 
     public static void main(String[] args){
 
-        int numCombatants = 10;
-        Combatant[] redTeam = new Combatant[numCombatants];
+        int armySize = 10;
+        Combatant[] redTeam = new Combatant[armySize];
+        Combatant[] blueTeam = new Combatant[armySize];
 
         DrawingPanel battlefield = new DrawingPanel( WINDOW_WIDTH, WINDOW_HEIGHT );
         battlefield.setWindowTitle("Helms Deep");
@@ -20,9 +21,20 @@ public class Battle {
         Combatant.setWindowHeight(WINDOW_HEIGHT);
         Combatant.setGraphics2D(g);
 
-        for(int i = 0; i < numCombatants; i++){
-            redTeam[i] = new Combatant();
+        redTeam = Battle.GenerateArmy(1, armySize);
+        blueTeam = Battle.GenerateArmy(2, armySize);
+        for(int i = 0; i < armySize; i++){
             redTeam[i].draw();
+            blueTeam[i].draw();
         }
+        battlefield.copyGraphicsToScreen();
+    }
+
+    public static Combatant[] GenerateArmy(int team, int armySize){
+        Combatant[] army = new Combatant[armySize];
+        for(int i = 0; i < armySize; i++){
+            army[i] = new Combatant(team);
+        }
+        return army;
     }
 }
