@@ -29,14 +29,20 @@ public class Battle {
         }
         battlefield.copyGraphicsToScreen();
 
-        while(!battlefield.keyHasBeenHit( DrawingPanel.ANY_KEY)){
+        boolean battleOver = false;
+        while(!battlefield.mouseClickHasOccurred(DrawingPanel.RIGHT_BUTTON) && !battleOver){
             battlefield.setBackground(Color.LIGHT_GRAY);
             for(int i = 0; i < armySize; i++){
                 redTeam[i].move(blueTeam);
                 blueTeam[i].move(redTeam);
-                redTeam[i].draw();
-                blueTeam[i].draw();
+                redTeam[i].attack(blueTeam);
+                blueTeam[i].attack(redTeam);
             }
+            if(Battle.checkDead(redTeam) == armySize || Battle.checkDead(blueTeam) == armySize){
+                battleOver = true;
+            }
+            Battle.drawArmy(redTeam);
+            Battle.drawArmy(blueTeam);
             battlefield.copyGraphicsToScreen();
         }
     }
@@ -47,5 +53,21 @@ public class Battle {
             army[i] = new Combatant(team);
         }
         return army;
+    }
+
+    public static int checkDead(Combatant[] army){
+        int numDead = 0;
+        for(int i = 0; i < army.length; i++){
+            if(army[i].getHealth() <= 0){
+                numDead++;
+            }
+        }
+        return numDead;
+    }
+
+    public static void drawArmy(Combatant[] army){
+        for(int i = 0; i < army.length; i++){
+            army[i].draw();
+        }
     }
 }
