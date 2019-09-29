@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Battle {
@@ -29,8 +30,9 @@ public class Battle {
         }
         battlefield.copyGraphicsToScreen();
 
-        boolean battleOver = false;
-        while(!battlefield.mouseClickHasOccurred(DrawingPanel.RIGHT_BUTTON) && !battleOver){
+        int dialogOption = JOptionPane.YES_NO_OPTION;
+        int battleOver = (JOptionPane.showConfirmDialog(null, "Let the battle begin?", "The Battle of CompSci Deep", dialogOption));
+        while(!battlefield.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON) && battleOver == 0){
             battlefield.setBackground(Color.LIGHT_GRAY);
             for(int i = 0; i < armySize; i++){
                 redTeam[i].move(blueTeam);
@@ -39,7 +41,7 @@ public class Battle {
                 blueTeam[i].attack(redTeam);
             }
             if(Battle.checkDead(redTeam) == armySize || Battle.checkDead(blueTeam) == armySize){
-                battleOver = true;
+                battleOver = 1;
             }
             Battle.drawArmy(redTeam);
             Battle.drawArmy(blueTeam);
@@ -50,7 +52,13 @@ public class Battle {
     public static Combatant[] GenerateArmy(int team, int armySize){
         Combatant[] army = new Combatant[armySize];
         for(int i = 0; i < armySize; i++){
-            army[i] = new Combatant(team);
+            int combatantClass = (int) (Math.random() * 2) + 1;
+            if(combatantClass == 1){
+                army[i] = new Combatant(team);
+            }
+            else {
+                army[i] = new Archer(team);
+            }
         }
         return army;
     }

@@ -13,7 +13,8 @@ public class Combatant {
     private int courage;
     private Vector330Class currPos;
     private Vector330Class movementDir;
-    private java.awt.Color team;
+    private java.awt.Color color;
+    private int team;
 
     public Combatant(){
         this.size = 10;
@@ -22,7 +23,7 @@ public class Combatant {
         this.courage = 50;
         this.health = 100;
         this.currPos = new Vector330Class(Math.random() * (windowWidth-100), Math.random() * (windowHeight-100));
-        this.team = Color.RED;
+        this.color = Color.RED;
         this.movementDir = new Vector330Class(1, 1);
     }
 
@@ -39,15 +40,25 @@ public class Combatant {
         if(team == 1) {
             int min = (int) (windowHeight * (2.0/3.0));
             int max = windowHeight-20;
-            this.team = Color.RED;
+            int teamNum = team;
+            this.color = Color.RED;
             this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) + 20, (Math.random() * ((max - min) + 1)) + min);
         }
         else{
             int min = 20;
             int max = (int) (windowHeight * (1.0/3.0));
-            this.team = Color.BLUE;
+            int teamNum = team;
+            this.color = Color.BLUE;
             this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) +20, (Math.random() * ((max - min) + 1)) + min);
         }
+    }
+
+    public void setColor(Color teamColor){
+            this.color = teamColor;
+    }
+
+    public void setTeam(int team){
+        this.team = team;
     }
 
     public int getX(){
@@ -62,6 +73,22 @@ public class Combatant {
         return this.health;
     }
 
+    public int getStrength(){
+        return this.strength;
+    }
+
+    public int getSize(){
+        return this.size;
+    }
+
+    public int getTeam(){
+        return this.team;
+    }
+
+    public Color getColor(){
+        return this.color;
+    }
+
     public void damage(int damage){
         this.health = this.health - damage;
     }
@@ -73,7 +100,7 @@ public class Combatant {
     public void draw(){
         if(this.getHealth() > 0) {
             if (Combatant.g != null) {
-                Combatant.g.setColor(this.team);
+                Combatant.g.setColor(this.color);
                 Combatant.g.fillOval((this.getX() - this.size), (this.getY() - this.size),
                         (2 * this.size), (2 * this.size));
             }
@@ -104,8 +131,8 @@ public class Combatant {
     public void attack(Combatant[] enemyArmy){
         for(int i = 0; i < enemyArmy.length; i++) {
             if(this.getHealth() > 0 && enemyArmy[i].getHealth() > 0) {
-                if (Math.abs(enemyArmy[i].getX() - this.getX()) <= this.size && Math.abs(enemyArmy[i].getY() - this.getY()) <= this.size) {
-                    enemyArmy[i].damage(this.strength);
+                if (Math.abs(enemyArmy[i].getX() - this.getX()) <= this.getSize() && Math.abs(enemyArmy[i].getY() - this.getY()) <= this.getSize()) {
+                    enemyArmy[i].damage(this.getStrength());
                 }
             }
         }
