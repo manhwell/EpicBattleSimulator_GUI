@@ -15,17 +15,19 @@ public class Combatant {
     private Vector330Class movementDir;
     private java.awt.Color color;
     private int team;
+    private String name;
 
     public Combatant(){
         this.size = 10;
         this.speed = 10;
-        this.strength = (int) (Math.random() * 50) + 1;
+        this.strength = (int) (Math.random() * 49) + 1;
         this.courage = 50;
         this.health = 100;
         this.team = 1;
         this.currPos = new Vector330Class(Math.random() * (windowWidth-100), Math.random() * (windowHeight-100));
         this.color = Color.RED;
         this.movementDir = new Vector330Class(1, 1);
+        this.name = "Combatant";
     }
 
     public Combatant(int team){
@@ -38,6 +40,7 @@ public class Combatant {
         this.courage = 50;
         this.health = 100 + this.size; // fi you are bigger you can take more hits
         this.movementDir = new Vector330Class(1, 1);
+        this.name = "Combatant";
         if(team == 1) {
             int min = (int) (windowHeight * (2.0/3.0));
             int max = windowHeight-20;
@@ -56,6 +59,10 @@ public class Combatant {
 
     public void setColor(Color teamColor){
             this.color = teamColor;
+    }
+
+    public void setHealth(int health){
+        this.health = health;
     }
 
     public void setTeam(int team){
@@ -90,8 +97,16 @@ public class Combatant {
         return this.color;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
     public void damage(int damage){
-        this.health = this.health - damage;
+        this.setHealth(this.health - damage);
     }
 
     public static void setWindowWidth( int width ) { Combatant.windowWidth = width; }
@@ -108,7 +123,9 @@ public class Combatant {
         }
     }
 
-    public void move(Combatant[] enemyArmy){
+    public void move(Combatant[] enemyArmy, Combatant[] friendlyArmy){
+        int numFriendly = this.countNumAround(friendlyArmy);
+        int numEnemy = this.countNumAround(enemyArmy);
         int speedToken = (int) (Math.random() * 100);
         double smallestDistance = 10000;
         int closestEnemy = 0;
@@ -124,8 +141,18 @@ public class Combatant {
         Vector330Class d = enemyArmy[closestEnemy].currPos.subtract(this.currPos);
         this.movementDir = d.normalize().scale(this.speed);
         if(this.speed > speedToken) {
-            this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
-            this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
+            if(numFriendly > numEnemy) {
+                this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
+                this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
+            }
+            else{
+                this.currPos.setX(this.currPos.getXint() + (-1 * this.movementDir.getXint()));
+                this.currPos.setY(this.currPos.getYint() + (-1 * this.movementDir.getYint()));
+            }
+        }
+        if((this.getX() > windowWidth || this.getY() > windowHeight || this.getX() < 0 || this.getY() < 0) && this.getHealth() > 0){
+            this.setHealth(0);
+            System.out.println(this.getName() + " has fled from battle, coward.");
         }
     }
 
@@ -137,5 +164,16 @@ public class Combatant {
                 }
             }
         }
+    }
+
+    public int countNumAround(Combatant[] army){
+        int numAround = 0;
+        for(int i = 0; i < army.length; i++) {
+            if (Math.abs(army[i].getX() - this.getX()) <= (this.size * 5) &&
+                    Math.abs(army[i].getY() - this.getY()) <= (this.size * 5)) {
+                numAround++;
+            }
+        }
+        return numAround;
     }
 }

@@ -31,8 +31,8 @@ public class Battle {
         while(!battlefield.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON) && battleOver == 0){
             battlefield.setBackground(Color.LIGHT_GRAY);
             for(int i = 0; i < ARMY_SIZE; i++){
-                redTeam.getSoldier(i).move(blueTeam.getArmy());
-                blueTeam.getSoldier(i).move(redTeam.getArmy());
+                redTeam.getSoldier(i).move(blueTeam.getArmy(), redTeam.getArmy());
+                blueTeam.getSoldier(i).move(redTeam.getArmy(), blueTeam.getArmy());
                 redTeam.getSoldier(i).attack(blueTeam.getArmy());
                 blueTeam.getSoldier(i).attack(redTeam.getArmy());
             }

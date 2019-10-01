@@ -7,6 +7,7 @@ public class Archer extends Combatant {
 
     public Archer(){
         super();
+        this.setName("Archer");
         this.range = 75;
         this.accuracy = 25;
         this.setColor(this.getTeam());
@@ -15,8 +16,9 @@ public class Archer extends Combatant {
     public Archer(int team){
         super(team);
         this.setTeam(team);
+        this.setName("Archer");
         this.range = 75;
-        this.accuracy = 25;
+        this.accuracy = 2;
         this.setColor(this.getTeam());
     }
 

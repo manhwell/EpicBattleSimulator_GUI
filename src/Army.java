@@ -21,11 +21,17 @@ public class Army {
         Army = new Combatant[armySize];
         for(int i = 0; i < armySize; i++){
             int combatantClass = (int) (Math.random() * 2) + 1;
-            if(combatantClass == 1){
-                this.Army[i] = new Combatant(team);
+            if(combatantClass == 1){  // Generate a melee class
+                int meleeClass = (int) (Math.random() * 2) + 1;
+                if(meleeClass == 1) {
+                    this.Army[i] = new Combatant(team);
+                }
+                else{
+                    this.Army[i] = new Knight(team);
+                }
             }
-            else {
-                this.Army[i] = new Archer(team);
+            else { // Generate a ranger class
+                this.Army[i] = new Combatant(team);
             }
         }
         this.armySize = armySize;
