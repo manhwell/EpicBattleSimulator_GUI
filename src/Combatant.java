@@ -22,6 +22,7 @@ public class Combatant {
         this.strength = (int) (Math.random() * 50) + 1;
         this.courage = 50;
         this.health = 100;
+        this.team = 1;
         this.currPos = new Vector330Class(Math.random() * (windowWidth-100), Math.random() * (windowHeight-100));
         this.color = Color.RED;
         this.movementDir = new Vector330Class(1, 1);
