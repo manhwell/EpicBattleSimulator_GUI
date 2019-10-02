@@ -71,5 +71,6 @@ public class Battle {
         else{
             JOptionPane.showMessageDialog(null, "Battle ended early.");
         }
+        battlefield.closeWindow();
     }
 }
