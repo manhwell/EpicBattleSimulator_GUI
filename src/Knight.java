@@ -1,4 +1,7 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 
 public class Knight extends Combatant{
     private int armour;
@@ -35,8 +38,12 @@ public class Knight extends Combatant{
         }
     }
 
-    public void damage(int damage){
+    public void damage(int damage) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         damage = damage - this.getArmour();
         this.setHealth(this.getHealth() - damage);
+        if(this.getHealth() <= 0){
+            AudioPlayer deathScream = new AudioPlayer("WilhelmScream.wav");
+            deathScream.play();
+        }
     }
 }

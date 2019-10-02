@@ -1,4 +1,7 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 
 public class Combatant {
 
@@ -105,8 +108,12 @@ public class Combatant {
         return this.name;
     }
 
-    public void damage(int damage){
+    public void damage(int damage) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         this.setHealth(this.health - damage);
+        if(this.getHealth() <= 0){
+            AudioPlayer deathScream = new AudioPlayer("WilhelmScream.wav");
+            deathScream.play();
+        }
     }
 
     public static void setWindowWidth( int width ) { Combatant.windowWidth = width; }
@@ -125,31 +132,31 @@ public class Combatant {
         }
     }
 
-    public void move(Combatant[] enemyArmy, Combatant[] friendlyArmy){
-        int numFriendly = this.countNumAround(friendlyArmy);
-        int numEnemy = this.countNumAround(enemyArmy);
+    public void move(Army enemyArmy, Army friendlyArmy){
+        int numFriendly = this.countNumAround(friendlyArmy.getArmy());
+        int numEnemy = this.countNumAround(enemyArmy.getArmy());
         int speedToken = (int) (Math.random() * 100);
         double smallestDistance = 10000;
         int closestEnemy = 0;
-        for(int i = 0; i < enemyArmy.length; i++){
-            if(this.getHealth() > 0 && enemyArmy[i].getHealth() > 0) {
-                Vector330Class findDist = enemyArmy[i].currPos.subtract(this.currPos);
+        for(int i = 0; i < enemyArmy.getArmySize(); i++){
+            if(this.getHealth() > 0 && enemyArmy.getArmy()[i].getHealth() > 0) {
+                Vector330Class findDist = enemyArmy.getArmy()[i].currPos.subtract(this.currPos);
                 if (findDist.magnitude() < smallestDistance) {
                     closestEnemy = i;
                     smallestDistance = findDist.magnitude();
                 }
             }
         }
-        Vector330Class d = enemyArmy[closestEnemy].currPos.subtract(this.currPos);
+        Vector330Class d = enemyArmy.getArmy()[closestEnemy].currPos.subtract(this.currPos);
         this.movementDir = d.normalize().scale(this.speed);
         if(this.speed > speedToken) {
-            if(numFriendly >= numEnemy) {
-                this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
-                this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
-            }
-            else{
+            if(2 * (friendlyArmy.getArmySize() - friendlyArmy.checkDead()) < (enemyArmy.getArmySize() - enemyArmy.checkDead())) {
                 this.currPos.setX(this.currPos.getXint() + (-1 * this.movementDir.getXint()));
                 this.currPos.setY(this.currPos.getYint() + (-1 * this.movementDir.getYint()));
+            }
+            else{
+                this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
+                this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
             }
         }
         if((this.getX() > windowWidth || this.getY() > windowHeight || this.getX() < 0 || this.getY() < 0) && this.getHealth() > 0){
@@ -158,7 +165,7 @@ public class Combatant {
         }
     }
 
-    public void attack(Combatant[] enemyArmy){
+    public void attack(Combatant[] enemyArmy) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
         for(int i = 0; i < enemyArmy.length; i++) {
             if(this.getHealth() > 0 && enemyArmy[i].getHealth() > 0) {
                 if (Math.abs(enemyArmy[i].getX() - this.getX()) <= this.getSize() && Math.abs(enemyArmy[i].getY() - this.getY()) <= this.getSize()) {
