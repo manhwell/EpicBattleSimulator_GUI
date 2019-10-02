@@ -18,7 +18,7 @@ public class Archer extends Combatant {
         this.setTeam(team);
         this.setName("Archer");
         this.range = 75;
-        this.accuracy = 2;
+        this.accuracy = 1;
         this.setColor(this.getTeam());
     }
 
@@ -40,7 +40,7 @@ public class Archer extends Combatant {
     }
 
     public void attack(Combatant[] enemyArmy) {
-        int accuracyToken = (int) (Math.random() * 100);
+        int accuracyToken = (int) (Math.random() * 99) + 1;
         for(int i = 0; i < enemyArmy.length; i++) {
             if(this.getHealth() > 0 && enemyArmy[i].getHealth() > 0) {
                 if (Math.abs(enemyArmy[i].getX() - this.getX()) <= this.getRange() &&

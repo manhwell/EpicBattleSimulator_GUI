@@ -120,6 +120,8 @@ public class Combatant {
                 Combatant.g.fillOval((this.getX() - this.size), (this.getY() - this.size),
                         (2 * this.size), (2 * this.size));
             }
+            g.setColor(Color.black);
+            g.drawString(this.getName(), this.getX(), this.getY());
         }
     }
 
@@ -141,7 +143,7 @@ public class Combatant {
         Vector330Class d = enemyArmy[closestEnemy].currPos.subtract(this.currPos);
         this.movementDir = d.normalize().scale(this.speed);
         if(this.speed > speedToken) {
-            if(numFriendly > numEnemy) {
+            if(numFriendly >= numEnemy) {
                 this.currPos.setX(this.currPos.getXint() + (this.movementDir.getXint()));
                 this.currPos.setY(this.currPos.getYint() + (this.movementDir.getYint()));
             }
@@ -169,8 +171,8 @@ public class Combatant {
     public int countNumAround(Combatant[] army){
         int numAround = 0;
         for(int i = 0; i < army.length; i++) {
-            if (Math.abs(army[i].getX() - this.getX()) <= (this.size * 5) &&
-                    Math.abs(army[i].getY() - this.getY()) <= (this.size * 5)) {
+            if (Math.abs(army[i].getX() - this.getX()) <= (this.size * 3) &&
+                    Math.abs(army[i].getY() - this.getY()) <= (this.size * 3)) {
                 numAround++;
             }
         }

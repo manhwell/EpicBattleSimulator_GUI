@@ -31,7 +31,7 @@ public class Army {
                 }
             }
             else { // Generate a ranger class
-                this.Army[i] = new Combatant(team);
+                this.Army[i] = new Archer(team);
             }
         }
         this.armySize = armySize;
