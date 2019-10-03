@@ -6,25 +6,48 @@ import java.io.IOException;
 
 public class Battle {
 
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 600;
-    private static final int ARMY_SIZE = 10;
+    private int windowWidth;
+    private int windowHeight;
+    private int armySize;
 
-    public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public Battle(){
+        this.windowHeight = 600;
+        this.windowWidth = 800;
+        this.armySize = 10;
+    }
 
-        DrawingPanel battlefield = new DrawingPanel(WINDOW_WIDTH, WINDOW_HEIGHT);
-        AudioPlayer myAudioPlayer = new AudioPlayer("WilhelmScream.wav");
+    public Battle(int windowWidth, int windowHeight, int armySize){
+        this.windowHeight = windowHeight;
+        this.windowWidth = windowWidth;
+        this.armySize = armySize;
+    }
+
+    public int getWindowWidth(){
+        return this.windowWidth;
+    }
+
+    public int getWindowHeight(){
+        return this.windowHeight;
+    }
+
+    public int getArmySize(){
+        return this.armySize;
+    }
+
+    public void runBattle() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
+        DrawingPanel battlefield = new DrawingPanel(this.getWindowWidth(), this.getWindowHeight());
         battlefield.setWindowTitle("Helms Deep");
         Graphics2D g = battlefield.getGraphics();
         battlefield.setBackground(Color.LIGHT_GRAY);
         battlefield.copyGraphicsToScreen();
 
-        Combatant.setWindowWidth(WINDOW_WIDTH);
-        Combatant.setWindowHeight(WINDOW_HEIGHT);
+        Combatant.setWindowWidth(this.getWindowWidth());
+        Combatant.setWindowHeight(this.getWindowHeight());
         Combatant.setGraphics2D(g);
 
-        Army redTeam = new Army(1, ARMY_SIZE);
-        Army blueTeam = new Army(2, ARMY_SIZE);
+        Army redTeam = new Army(1, this.getArmySize());
+        Army blueTeam = new Army(2, this.getArmySize());
         redTeam.drawArmy();
         blueTeam.drawArmy();
         battlefield.copyGraphicsToScreen();
@@ -33,9 +56,12 @@ public class Battle {
         int battleOver = (JOptionPane.showConfirmDialog(null, "Let the battle begin?", "The Battle of CompSci Deep", dialogOption));
         int winner = -1;
         while(!battlefield.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON) && battleOver == 0){
+            if(battlefield.keyHasBeenHit(DrawingPanel.SPACE_KEY)){
+                this.pauseBattle(battlefield, g);
+            }
             battlefield.setBackground(Color.LIGHT_GRAY);
             g.drawString("Left click to end the battle early", 0, 12);
-            for(int i = 0; i < ARMY_SIZE; i++){
+            for(int i = 0; i < this.armySize; i++){
                 redTeam.getSoldier(i).move(blueTeam, redTeam);
                 blueTeam.getSoldier(i).move(redTeam, blueTeam);
                 redTeam.getSoldier(i).attack(blueTeam.getArmy());
@@ -72,5 +98,12 @@ public class Battle {
             JOptionPane.showMessageDialog(null, "Battle ended early.");
         }
         battlefield.closeWindow();
+    }
+
+    private void pauseBattle(DrawingPanel battlefield, Graphics2D g){
+        while(!battlefield.keyHasBeenHit(DrawingPanel.SPACE_KEY)){
+            g.drawString("PAUSED", this.getWindowWidth() / 2, this.getWindowHeight() / 2);
+            battlefield.copyGraphicsToScreen();
+        }
     }
 }
