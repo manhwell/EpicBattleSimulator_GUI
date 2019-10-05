@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Army() provides the generation and manipulation of an army of Combatants().
  * @author C2C Manuel Riolo
@@ -30,21 +32,21 @@ public class Army {
      * @param team The team # of the army.
      * @param armySize The size of as army.
      */
-    public Army(int team, int armySize){
+    public Army(int team, int armySize, int windowWidth, int windowHeight){
         Army = new Combatant[armySize]; // Allocate space for a proper army
         for(int i = 0; i < armySize; i++){
             int combatantClass = (int) (Math.random() * 2) + 1; // Random variable to choose what to put in the army.
             if(combatantClass == 1){  // Generate a melee class
                 int meleeClass = (int) (Math.random() * 2) + 1; // Random variable to choose what melee class to put in the army
                 if(meleeClass == 1) { // Create a combatant.
-                    this.Army[i] = new Combatant(team);
+                    this.Army[i] = new Combatant(team, windowWidth, windowHeight);
                 }
                 else{ // Create a knight
-                    this.Army[i] = new Knight(team);
+                    this.Army[i] = new Knight(team, windowWidth, windowHeight);
                 }
             }
             else { // Create a ranger class
-                this.Army[i] = new Archer(team);
+                this.Army[i] = new Archer(team, windowWidth, windowHeight);
             }
         }
         this.armySize = armySize;
@@ -78,10 +80,10 @@ public class Army {
     /**
      * Draws an entire Army to a graphics window.
      */
-    public void drawArmy(){
+    public void drawArmy(Graphics g){
         // Go through the Combatant array and draw each combatant.
         for(int i = 0; i < this.armySize; i++){
-            this.Army[i].draw();
+            this.Army[i].draw(g);
         }
     }
 

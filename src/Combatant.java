@@ -9,9 +9,9 @@ import java.io.IOException;
  */
 public class Combatant {
 
-    private static Graphics2D g = null;
-    private static int windowWidth = 100;
-    private static int windowHeight = 100;
+    //private static Graphics g;
+    private int windowWidth;
+    private int windowHeight;
 
     private int size;
     private int speed;
@@ -44,7 +44,9 @@ public class Combatant {
      * Generates a new Combatant class based on passed variables.
      * @param team The team to base the Combatants color on.
      */
-    public Combatant(int team){
+    public Combatant(int team, int windowWidth, int windowHeight){
+        this.windowHeight = windowHeight;
+        this.windowWidth = windowWidth;
         this.size = (int) (Math.random() * 10) + 10; // vary size
         this.speed = ((int) (Math.random() * 4) + 3) - this.size; // the bigger you are the slower you go
         if(this.speed < 3){
@@ -187,31 +189,37 @@ public class Combatant {
      * Sets the graphics window width.
      * @param width The new width of the graphics window.
      */
-    public static void setWindowWidth( int width ) { Combatant.windowWidth = width; }
+    public void setWindowWidth( int width ) { this.windowWidth = width; }
+
+    public int getWindowWidth(){
+        return this.windowWidth;
+    }
 
     /**
      * Sets the graphics window height.
      * @param height The new height of the graphics window
      */
-    public static void setWindowHeight( int height ) { Combatant.windowHeight = height; }
+    public void setWindowHeight( int height ) { this.windowHeight = height; }
+
+    public int getWindowHeight(){
+        return this.windowHeight;
+    }
 
     /**
      * Sets the graphics window to a certain graphics type.
      * @param g The type of graphics the window will display.
-     */
-    public static void setGraphics2D( Graphics2D g ) { Combatant.g = g; }
+
+    public static void setGraphics2D( Graphics2D g ) { }*/
 
     /**
      * Draws a Combatant on the graphics window.
      */
-    public void draw(){
+    public void draw(Graphics g){
         // Code taken from bouncing balls in class example.
         if(this.getHealth() > 0) {
-            if (Combatant.g != null) {
-                Combatant.g.setColor(this.color);
-                Combatant.g.fillOval((this.getX() - this.size), (this.getY() - this.size),
-                        (2 * this.size), (2 * this.size));
-            }
+            g.setColor(this.color);
+            g.fillOval((this.getX() - this.size), (this.getY() - this.size),
+                    (2 * this.size), (2 * this.size));
             // Draw the class of each combatant on top of them for easier identification.
             g.setColor(Color.black);
             g.drawString(this.getName(), this.getX(), this.getY());

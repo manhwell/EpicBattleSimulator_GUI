@@ -72,15 +72,11 @@ public class Battle {
         Graphics2D g = battlefield.getGraphics();
         battlefield.setBackground(Color.LIGHT_GRAY);
         battlefield.copyGraphicsToScreen();
-        // Set graphics window variables for Combatant to spawn properly.
-        Combatant.setWindowWidth(this.getWindowWidth());
-        Combatant.setWindowHeight(this.getWindowHeight());
-        Combatant.setGraphics2D(g);
         // Initialize both armies and draw them.
-        Army redTeam = new Army(1, this.getArmySize());
-        Army blueTeam = new Army(2, this.getArmySize());
-        redTeam.drawArmy();
-        blueTeam.drawArmy();
+        Army redTeam = new Army(1, this.getArmySize(), windowWidth, windowHeight);
+        Army blueTeam = new Army(2, this.getArmySize(), windowWidth, windowHeight);
+        redTeam.drawArmy(g);
+        blueTeam.drawArmy(g);
         battlefield.copyGraphicsToScreen();
         // Display opening message.
         int dialogOption = JOptionPane.YES_NO_OPTION;
@@ -116,8 +112,8 @@ public class Battle {
                 winner = 2;
             }
             // Draw the combatants after attacks are made then display the remaining number for each army.
-            redTeam.drawArmy();
-            blueTeam.drawArmy();
+            redTeam.drawArmy(g);
+            blueTeam.drawArmy(g);
             g.drawString("# of Red Team left: " + (redTeam.getArmySize() - redTeam.checkDead()), 0, 24);
             g.drawString("# of Blue Team left: " + (blueTeam.getArmySize() - blueTeam.checkDead()), 0, 36);
             battlefield.copyGraphicsToScreen();

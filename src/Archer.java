@@ -28,9 +28,9 @@ public class Archer extends Combatant {
      * Generates a new Archer class based on passed variables.
      * @param team The team to base the Archer's color on.
      */
-    public Archer(int team){
+    public Archer(int team, int windowWidth, int windowHeight){
         // Setup an archer and give them a team color.
-        super(team);
+        super(team, windowWidth, windowHeight);
         this.setTeam(team);
         this.setName("Archer");
         this.range = 75;
