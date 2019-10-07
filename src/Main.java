@@ -17,6 +17,6 @@ public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         // Initialize and run the battle
         Battle myBattle = new Battle(WINDOW_WIDTH, WINDOW_HEIGHT, ARMY_SIZE);
-        myBattle.runBattle();
+        //myBattle.runBattle(AnimationThread animation);
     }
 }

@@ -65,7 +65,7 @@ public class Battle {
      * @throws IOException For a file not found
      * @throws LineUnavailableException For a part of the file not findable.
      */
-    public void runBattle() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void runBattle(AnimationThread animationArea) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         // Initialize the graphics window.
         DrawingPanel battlefield = new DrawingPanel(this.getWindowWidth(), this.getWindowHeight());
         battlefield.setWindowTitle("Helms Deep");
@@ -98,17 +98,20 @@ public class Battle {
             // If both red team and blue team are completely dead, its a tie.
             if(redTeam.checkDead() == redTeam.getArmySize() && blueTeam.checkDead() == blueTeam.getArmySize()){
                 battleOver = 1;
+                animationArea.toggleAnimation();
                 winner = 0;
             }
             // If red team is completely dead, blue team wins
             else if(redTeam.checkDead() == redTeam.getArmySize()){
                 battleOver = 1;
+                animationArea.toggleAnimation();
                 winner = 1;
             }
 
             // If blue team is completely dead, red team wins.
             else if(blueTeam.checkDead() == blueTeam.getArmySize()){
                 battleOver = 1;
+                animationArea.toggleAnimation();
                 winner = 2;
             }
             // Draw the combatants after attacks are made then display the remaining number for each army.

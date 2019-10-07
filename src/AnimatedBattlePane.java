@@ -47,7 +47,7 @@ public class AnimatedBattlePane extends JFrame{
     }
 
     public AnimatedBattlePane() {
-        setTitle("Listener Demo");
+        setTitle("Epic Battle Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT);
         contentPane = new JPanel();
