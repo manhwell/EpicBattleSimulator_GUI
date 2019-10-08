@@ -39,4 +39,13 @@ public class AnimationArea extends JPanel {
         this.repaint();	// make updated graphics visible
 
     }
+
+    public Army getArmy(int team){
+        if(team == 1){
+            return redTeam;
+        }
+        else{
+            return blueTeam;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.io.IOException;
 
 // AnimationThread - subclass of Thread to run the animation
@@ -19,6 +19,10 @@ public class AnimationThread extends Thread {
 		this.stopper = !this.stopper;  // flip the stopper attribute
 	}
 
+	public boolean isAnimationRunning(){
+		return this.stopper;
+	}
+
 	// run() method is invoked automatically by the Java VM
 	public void run() {
 		while (true) {
@@ -29,6 +33,14 @@ public class AnimationThread extends Thread {
 							animationArea.animate();  // runs the animation
 						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 							e.printStackTrace();
+						}
+						if (animationArea.getArmy(1).checkDead() == animationArea.getArmy(1).getArmySize()){
+							stopper = true;
+							JOptionPane.showMessageDialog(null, "Blue team wins!");
+						}
+						if (animationArea.getArmy(2).checkDead() == animationArea.getArmy(2).getArmySize()){
+							stopper = true;
+							JOptionPane.showMessageDialog(null, "Red team wins!");
 						}
 					} // end of run() method
 				});

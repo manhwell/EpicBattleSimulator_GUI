@@ -11,7 +11,7 @@ public class AnimatedBattlePane extends JFrame{
     private JPanel contentPane;
     private JPanel displayPanel;
     private JLabel lblReportLabel;
-    private JButton btnDemoButton;
+    private JButton pauseButton;
     private static int WINDOW_X = 400;
     private static int WINDOW_Y = 100;
     private static int WINDOW_WIDTH = 750;
@@ -56,7 +56,7 @@ public class AnimatedBattlePane extends JFrame{
         contentPane.setLayout(null);
         contentPane.add(getDisplayPanel());
         contentPane.add(getLblReportLabel());
-        contentPane.add(getBtnDemoButton());
+        contentPane.add(pauseButton());
 
         /////////// special keyboard handling //////////////////
         KeyboardFocusManager manager =
@@ -94,13 +94,13 @@ public class AnimatedBattlePane extends JFrame{
         }
         return lblReportLabel;
     }
-    private JButton getBtnDemoButton() {
-        if (btnDemoButton == null) {
-            btnDemoButton = new JButton("Demo Button");
-            btnDemoButton.addMouseListener(new BtnDemoButtonMouseListener());
-            btnDemoButton.setBounds((int) (WINDOW_WIDTH * .75), WINDOW_HEIGHT- 100, (int) (WINDOW_WIDTH * .25) - 20, 50);
+    private JButton pauseButton() {
+        if (pauseButton == null) {
+            pauseButton = new JButton("Pause");
+            pauseButton.addMouseListener(new BtnPauseButtonListener());
+            pauseButton.setBounds((int) (WINDOW_WIDTH * .75), WINDOW_HEIGHT- 100, (int) (WINDOW_WIDTH * .25) - 20, 50);
         }
-        return btnDemoButton;
+        return pauseButton;
     }
     private class DisplayPanelMouseListener extends MouseAdapter {
         @Override
@@ -110,10 +110,17 @@ public class AnimatedBattlePane extends JFrame{
             animation.toggleAnimation();
         }
     }
-    private class BtnDemoButtonMouseListener extends MouseAdapter {
+    private class BtnPauseButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            lblReportLabel.setText("Demo Button was pressed");
+            if(animation.isAnimationRunning()) {
+                animation.toggleAnimation();
+                pauseButton().setLabel("Pause");
+            }
+            else {
+                animation.toggleAnimation();
+                pauseButton().setLabel("Unpause");
+            }
         }
     }
 }
