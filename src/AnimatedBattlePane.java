@@ -52,18 +52,18 @@ public class AnimatedBattlePane extends JFrame{
     public AnimatedBattlePane() {
         setTitle("Epic Battle Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setSize(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.setLayout( new BorderLayout() );
+        this.setSize(WINDOW_X, WINDOW_Y);
+        this.setLayout(new BorderLayout());
         setBounds(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT);
         JMenuBar jmb = getMyMenuBar();
-        this.add(jmb);
+        this.add(jmb, BorderLayout.NORTH);
         contentPane = new JPanel();
         contentPane.setBorder(BorderFactory.createLineBorder(Color.red));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        contentPane.add(getDisplayPanel());
-        contentPane.add(getLblReportLabel());
-        contentPane.add(pauseButton());
+        contentPane.add(getDisplayPanel(), BorderLayout.CENTER);
+        contentPane.add(getLblReportLabel(), BorderLayout.SOUTH);
+        contentPane.add(pauseButton(), BorderLayout.SOUTH);
 
         /////////// special keyboard handling //////////////////
         KeyboardFocusManager manager =
@@ -83,7 +83,7 @@ public class AnimatedBattlePane extends JFrame{
             displayPanel.addMouseListener(new DisplayPanelMouseListener());
             displayPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
             displayPanel.setBackground(Color.WHITE);
-            displayPanel.setBounds(10, 30, WINDOW_WIDTH - 35, WINDOW_HEIGHT - 125);
+            displayPanel.setBounds(10, 30, WINDOW_WIDTH - 35, WINDOW_HEIGHT - 135);
             displayPanel.setLayout(null);
 
             ///////////////
