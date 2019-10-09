@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.MenuBar;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,7 @@ public class AnimatedBattlePane extends JFrame{
 
     private JPanel contentPane;
     private JPanel displayPanel;
+    private JMenuBar menuBar;
     private JLabel lblReportLabel;
     private JButton pauseButton;
     private static int WINDOW_X = 400;
@@ -54,6 +56,7 @@ public class AnimatedBattlePane extends JFrame{
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        contentPane.add(getMyMenuBar());
         contentPane.add(getDisplayPanel());
         contentPane.add(getLblReportLabel());
         contentPane.add(pauseButton());
@@ -94,6 +97,27 @@ public class AnimatedBattlePane extends JFrame{
         }
         return lblReportLabel;
     }
+
+    private JMenuBar getMyMenuBar(){
+        //TODO get this working and displaying.
+        if(menuBar == null){
+            menuBar = new JMenuBar();
+
+            JMenu jmSettings = new JMenu("Settings");
+
+            JMenuItem jmRestart = new JMenuItem("Restart");
+            JMenuItem jmPause = new JMenuItem("Pause");
+            JMenuItem jmExit = new JMenuItem("Exit");
+
+            jmSettings.add(jmPause);
+            jmSettings.add(jmRestart);
+            jmSettings.add(jmExit);
+
+            menuBar.add(jmSettings);
+        }
+        return menuBar;
+    }
+
     private JButton pauseButton() {
         if (pauseButton == null) {
             pauseButton = new JButton("Pause");
