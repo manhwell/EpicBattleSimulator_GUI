@@ -57,7 +57,7 @@ public class Combatant {
         this.health = 100 + this.size; // fi you are bigger you can take more hits
         this.movementDir = new Vector330Class(1, 1);
         this.name = "Combatant";
-        if(team == 1) {
+        if(team == 0) {
             int min = (int) (windowHeight * (2.0/3.0));
             int max = windowHeight-20;
             int teamNum = team;

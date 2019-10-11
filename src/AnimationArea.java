@@ -5,17 +5,16 @@ import java.awt.*;
 import java.io.IOException;
 
 public class AnimationArea extends JPanel {
-    private Army redTeam;
-    private Army blueTeam;
+    private Battlefield myBattlefield;
     private int armySize;
+    private int numArmies;
     private static int WINDOW_WIDTH = 715;
     private static int WINDOW_HEIGHT = 475;
 
     public AnimationArea(){
         super();
         armySize = 10;
-        redTeam = new Army(1, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
-        blueTeam = new Army(2, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
+        myBattlefield = new Battlefield(numArmies, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     public void animate() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
