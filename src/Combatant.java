@@ -2,6 +2,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Combatant() provides the generation and manipulation of a Combatant for an Army.
@@ -57,19 +58,37 @@ public class Combatant {
         this.health = 100 + this.size; // fi you are bigger you can take more hits
         this.movementDir = new Vector330Class(1, 1);
         this.name = "Combatant";
-        if(team == 1) {
-            int min = (int) (windowHeight * (2.0/3.0));
-            int max = windowHeight-20;
-            int teamNum = team;
-            this.color = Color.RED;
-            this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) + 20, (Math.random() * ((max - min) + 1)) + min);
+        if(team == 0) {
+            int minY = this.size;
+            int maxY = (int) (windowHeight / 2.5);
+            int minX = this.size;
+            int maxX = (int) (windowWidth / 2.5);
+            this.color = Color.blue;
+            this.currPos = new Vector330Class((Math.random() * (maxX - minX) + minX), (Math.random() * (maxY - minY) + minY));
         }
-        else{
-            int min = 20;
-            int max = (int) (windowHeight * (1.0/3.0));
-            int teamNum = team;
-            this.color = Color.BLUE;
-            this.currPos = new Vector330Class((Math.random() * (windowWidth-40)) +20, (Math.random() * ((max - min) + 1)) + min);
+        else if(team == 1){
+            int minY = (int) (windowHeight / 1.5);
+            int maxY = windowHeight - this.size;
+            int minX = (int) (windowWidth / 1.5);
+            int maxX = windowWidth - this.size;
+            this.color = Color.red;
+            this.currPos = new Vector330Class((Math.random() * (maxX - minX) + minX), (Math.random() * (maxY - minY) + minY));
+        }
+        else if(team == 2){
+            int minY = (int) (windowHeight / 1.5);
+            int maxY = windowHeight - this.size;;
+            int minX = this.size;
+            int maxX = (int) (windowWidth / 2.5);
+            this.color = Color.green;
+            this.currPos = new Vector330Class((Math.random() * (maxX - minX) + minX), (Math.random() * (maxY - minY) + minY));
+        }
+        else if(team == 3){
+            int minY = this.size;
+            int maxY = (int) (windowHeight / 2.5);
+            int minX = (int) (windowWidth / 1.5);
+            int maxX = windowWidth - this.size;
+            this.color = Color.yellow;
+            this.currPos = new Vector330Class((Math.random() * (maxX - minX) + minX), (Math.random() * (maxY - minY) + minY));
         }
     }
 
@@ -231,14 +250,14 @@ public class Combatant {
      * @param enemyArmy The Army() for the enemy.
      * @param friendlyArmy The Army() for allies.
      */
-    public void move(Army enemyArmy, Army friendlyArmy){
+    public void move(ArrayList<Combatant> enemyArmy, Army friendlyArmy){
         int speedToken = (int) (Math.random() * 100); // Chance that they will move this turn.
         double smallestDistance = 10000; // Initial set very large.
         int closestEnemy = 0;
         // Find the closest enemy.
-        for(int i = 0; i < enemyArmy.getArmySize(); i++){
-            if(this.getHealth() > 0 && enemyArmy.getArmy()[i].getHealth() > 0) { // Confirm they are both alive.
-                Vector330Class findDist = enemyArmy.getArmy()[i].currPos.subtract(this.currPos); // Finding vector between the 2
+        for(int i = 0; i < enemyArmy.size(); i++){
+            if(this.getHealth() > 0 && enemyArmy.get(i).getHealth() > 0) { // Confirm they are both alive.
+                Vector330Class findDist = enemyArmy.get(i).currPos.subtract(this.currPos); // Finding vector between the 2
                 // If new distance is smaller than the previous distance, update new smallest distance and store that index.
                 if (findDist.magnitude() < smallestDistance) {
                     closestEnemy = i;
@@ -247,11 +266,11 @@ public class Combatant {
             }
         }
         // Get that vector between you and the closest enemy and move toward them based on your speed.
-        Vector330Class d = enemyArmy.getArmy()[closestEnemy].currPos.subtract(this.currPos);
+        Vector330Class d = enemyArmy.get(closestEnemy).currPos.subtract(this.currPos);
         this.movementDir = d.normalize().scale(this.speed); // Increases distance traveled by speed.
         if(this.speed > speedToken) { // A higher speed = a greater chance to move this turn.
             // If the enemy army is twice your size, run away.
-            if(2 * (friendlyArmy.getArmySize() - friendlyArmy.checkDead()) < (enemyArmy.getArmySize() - enemyArmy.checkDead())) {
+            if(8 * (friendlyArmy.getArmySize() - friendlyArmy.checkDead()) < (enemyArmy.size() - this.checkEnemyDead(enemyArmy))) {
                 this.currPos.setX(this.currPos.getXint() + (-1 * this.movementDir.getXint()));
                 this.currPos.setY(this.currPos.getYint() + (-1 * this.movementDir.getYint()));
             }
@@ -275,14 +294,24 @@ public class Combatant {
      * @throws IOException For a file not found
      * @throws LineUnavailableException For a part of the file not findable.
      */
-    public void attack(Combatant[] enemyArmy) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
-        for(int i = 0; i < enemyArmy.length; i++) {
-            if(this.getHealth() > 0 && enemyArmy[i].getHealth() > 0) { // Check that both of you are alive
+    public void attack(ArrayList<Combatant> enemyArmy) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+        for(int i = 0; i < enemyArmy.size(); i++) {
+            if(this.getHealth() > 0 && enemyArmy.get(i).getHealth() > 0) { // Check that both of you are alive
                 // If the enemy is within range of you, attack them.
-                if (Math.abs(enemyArmy[i].getX() - this.getX()) <= this.getSize() && Math.abs(enemyArmy[i].getY() - this.getY()) <= this.getSize()) {
-                    enemyArmy[i].damage(this.getStrength()); // Deal damage to the enemy based off your strength.
+                if (Math.abs(enemyArmy.get(i).getX() - this.getX()) <= this.getSize() && Math.abs(enemyArmy.get(i).getY() - this.getY()) <= this.getSize()) {
+                    enemyArmy.get(i).damage(this.getStrength()); // Deal damage to the enemy based off your strength.
                 }
             }
         }
+    }
+
+    public int checkEnemyDead(ArrayList<Combatant> enemyArmy){
+        int numDead = 0;
+        for(int i = 0; i < enemyArmy.size(); i++){
+            if(enemyArmy.get(i).getHealth() <= 0){
+                numDead++;
+            }
+        }
+        return numDead;
     }
 }

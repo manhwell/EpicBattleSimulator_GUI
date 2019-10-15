@@ -28,8 +28,6 @@ public class Knight extends Combatant{
         super(team, windowWidth, windowHeight);
         this.setName("Knight");
         this.armour = 15;
-        this.setTeam(team);
-        this.setColor(this.getTeam());
     }
 
     /**
@@ -46,20 +44,6 @@ public class Knight extends Combatant{
      */
     public void setArmour(int armour){
         this.armour = armour;
-    }
-
-    /**
-     * Sets the color on an Knight based off a team #
-     * @param team The team # to base the color assignment off of.
-     */
-    public void setColor(int team){
-        // Use team # to decide which color to get.
-        if(this.getTeam() == 1){
-            this.setColor(Color.pink);
-        }
-        else{
-            this.setColor(Color.magenta);
-        }
     }
 
     /**
