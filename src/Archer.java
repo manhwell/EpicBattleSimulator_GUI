@@ -21,7 +21,6 @@ public class Archer extends Combatant {
         this.setName("Archer");
         this.range = 75;
         this.accuracy = 22;
-        this.setColor(this.getTeam());
     }
 
     /**
@@ -31,11 +30,9 @@ public class Archer extends Combatant {
     public Archer(int team, int windowWidth, int windowHeight){
         // Setup an archer and give them a team color.
         super(team, windowWidth, windowHeight);
-        this.setTeam(team);
         this.setName("Archer");
         this.range = 75;
         this.accuracy = 2;
-        this.setColor(this.getTeam());
     }
 
     /**
@@ -52,20 +49,6 @@ public class Archer extends Combatant {
      */
     public int getAccuracy(){
         return this.accuracy;
-    }
-
-    /**
-     * Sets the color on an Archer based off a team #
-     * @param team The team # to base the color assignment off of.
-     */
-    public void setColor(int team){
-        // Use team # to decide which color to get.
-        if(this.getTeam() == 1){
-            this.setColor(Color.orange);
-        }
-        else{
-            this.setColor(Color.green);
-        }
     }
 
     /**

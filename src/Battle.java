@@ -90,10 +90,10 @@ public class Battle {
             g.drawString("Left click to end the battle early", 0, 12);
             // Move each combatant and then let them attack.
             for(int i = 0; i < this.armySize; i++){
-                redTeam.getSoldier(i).move(blueTeam, redTeam);
+                /*redTeam.getSoldier(i).move(blueTeam, redTeam);
                 blueTeam.getSoldier(i).move(redTeam, blueTeam);
                 redTeam.getSoldier(i).attack(blueTeam.getArmy());
-                blueTeam.getSoldier(i).attack(redTeam.getArmy());
+                blueTeam.getSoldier(i).attack(redTeam.getArmy());*/
             }
             // If both red team and blue team are completely dead, its a tie.
             if(redTeam.checkDead() == redTeam.getArmySize() && blueTeam.checkDead() == blueTeam.getArmySize()){
