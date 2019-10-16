@@ -67,6 +67,10 @@ public class AnimatedBattlePane extends JFrame{
         manager.addKeyEventDispatcher(new MyDispatcher());
         /////////// end of special added code //////////////////
 
+        JMenuBar jmb = getMyMenuBar();
+        this.setJMenuBar(jmb);
+        this.setVisible(true);
+
     }
 
     private JPanel getDisplayPanel() {
