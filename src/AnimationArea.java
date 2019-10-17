@@ -42,12 +42,11 @@ public class AnimationArea extends JPanel {
         myBattlefield = new Battlefield(numArmies, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
-    /*public Army getArmy(int team){
-        if(team == 1){
-            return redTeam;
-        }
-        else{
-            return blueTeam;
-        }
-    }*/
+    public Battlefield getBattlefield(){
+        return this.myBattlefield;
+    }
+
+    public void setNumArmies(){
+        this.myBattlefield.getNumArmies();
+    }
 }

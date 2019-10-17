@@ -9,6 +9,8 @@ public class Battlefield {
     private List<Army> armiesOnField = new ArrayList<>();
     private List<Combatant> enemiesOnField = new ArrayList<>();
     private int armySize;
+    private int windowWidth;
+    private int windowHeight;
 
     public Battlefield(){
         this.armiesOnField.add(new Army(0, 10, 715, 475));
@@ -21,6 +23,8 @@ public class Battlefield {
             this.armiesOnField.add(new Army(i, armySize, windowWidth, windowHeight));
         }
         this.armySize = armySize;
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
     }
 
     public void draw(Graphics g){
@@ -62,5 +66,15 @@ public class Battlefield {
             return 1;
         }
         else return 0;
+    }
+
+    public List<Army> getArmiesOnField() {
+        return armiesOnField;
+    }
+
+    public void addArmy(){
+        if(this.getNumArmies() < 4) {
+            this.armiesOnField.add(new Army(4, this.armySize, this.windowWidth, this.windowHeight));
+        }
     }
 }

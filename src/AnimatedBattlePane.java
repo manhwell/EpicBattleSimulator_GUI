@@ -144,7 +144,9 @@ public class AnimatedBattlePane extends JFrame{
             case "Exit":
                 System.exit(0);
             case "Restart":
-                animation.getAnimationArea().restart();
+                //animation.getAnimationArea().restart();
+                //TODO fix null pointer error when you try to add a new army.
+                animation.getAnimationArea().getBattlefield().addArmy();
                 break;
             case "Battlefield Settings":
                 this.displaySettingsMenu();
@@ -174,6 +176,8 @@ public class AnimatedBattlePane extends JFrame{
             if(animation.isAnimationRunning()) {
                 animation.toggleAnimation();
                 pauseButton().setLabel("Pause");
+                animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(2);
+                animation.getAnimationArea().setNumArmies();
             }
             else {
                 animation.toggleAnimation();
