@@ -20,6 +20,7 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_WIDTH = 750;
     private static int WINDOW_HEIGHT = 600;
     private AnimationThread animation;
+    private JFrame settingsMenu;
 
     private class MyDispatcher implements KeyEventDispatcher {
         @Override
@@ -71,19 +72,8 @@ public class AnimatedBattlePane extends JFrame{
         this.setJMenuBar(jmb);
         this.setVisible(true);
 
-    }
+        //this.settingsMenu = new SettingsMenu();
 
-    public void actionPerformed(ActionEvent ae){
-        String commandStr = ae.getActionCommand();
-        if(commandStr.equals("Pause")){
-            animation.toggleAnimation();
-        }
-        else if(commandStr.equals("Exit")){
-            System.exit(0);
-        }
-        else if(commandStr.equals("Restart")){
-            animation.getAnimationArea().restart();
-        }
     }
 
     private JPanel getDisplayPanel() {
@@ -116,7 +106,6 @@ public class AnimatedBattlePane extends JFrame{
     }
 
     private JMenuBar getMyMenuBar(){
-        //TODO get this working and displaying.
         if(menuBar == null){
             menuBar = new JMenuBar();
 
@@ -135,10 +124,32 @@ public class AnimatedBattlePane extends JFrame{
 
             JMenu jmSettings = new JMenu("Settings");
 
+            JMenuItem jmBattleSettings = new JMenuItem("Battlefield Settings");
+            jmBattleSettings.addActionListener(this::actionPerformed);
+
+            jmSettings.add(jmBattleSettings);
+
             menuBar.add(jmFile);
             menuBar.add(jmSettings);
         }
         return menuBar;
+    }
+
+    public void actionPerformed(ActionEvent ae){
+        String commandStr = ae.getActionCommand();
+        switch (commandStr) {
+            case "Pause":
+                animation.toggleAnimation();
+                break;
+            case "Exit":
+                System.exit(0);
+            case "Restart":
+                animation.getAnimationArea().restart();
+                break;
+            case "Battlefield Settings":
+                this.displaySettingsMenu();
+                break;
+        }
     }
 
     private JButton pauseButton() {
@@ -169,5 +180,9 @@ public class AnimatedBattlePane extends JFrame{
                 pauseButton().setLabel("Unpause");
             }
         }
+    }
+
+    private void displaySettingsMenu(){
+        this.settingsMenu.setVisible(true);
     }
 }
