@@ -3,6 +3,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.MenuBar;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,8 +19,7 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_Y = 100;
     private static int WINDOW_WIDTH = 750;
     private static int WINDOW_HEIGHT = 600;
-
-    AnimationThread animation;
+    private AnimationThread animation;
 
     private class MyDispatcher implements KeyEventDispatcher {
         @Override
@@ -73,6 +73,19 @@ public class AnimatedBattlePane extends JFrame{
 
     }
 
+    public void actionPerformed(ActionEvent ae){
+        String commandStr = ae.getActionCommand();
+        if(commandStr.equals("Pause")){
+            animation.toggleAnimation();
+        }
+        else if(commandStr.equals("Exit")){
+            System.exit(0);
+        }
+        else if(commandStr.equals("Restart")){
+            animation.getAnimationArea().restart();
+        }
+    }
+
     private JPanel getDisplayPanel() {
         if (displayPanel == null) {
 
@@ -107,16 +120,22 @@ public class AnimatedBattlePane extends JFrame{
         if(menuBar == null){
             menuBar = new JMenuBar();
 
-            JMenu jmSettings = new JMenu("Settings");
+            JMenu jmFile = new JMenu("File");
 
             JMenuItem jmRestart = new JMenuItem("Restart");
+            jmRestart.addActionListener(this::actionPerformed);
             JMenuItem jmPause = new JMenuItem("Pause");
+            jmPause.addActionListener(this::actionPerformed);
             JMenuItem jmExit = new JMenuItem("Exit");
+            jmExit.addActionListener(this::actionPerformed);
 
-            jmSettings.add(jmPause);
-            jmSettings.add(jmRestart);
-            jmSettings.add(jmExit);
+            jmFile.add(jmPause);
+            jmFile.add(jmRestart);
+            jmFile.add(jmExit);
 
+            JMenu jmSettings = new JMenu("Settings");
+
+            menuBar.add(jmFile);
             menuBar.add(jmSettings);
         }
         return menuBar;

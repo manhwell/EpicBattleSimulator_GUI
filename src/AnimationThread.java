@@ -50,4 +50,8 @@ public class AnimationThread extends Thread {
 
 	} // end of run() method
 
+	public AnimationArea getAnimationArea(){
+		return this.animationArea;
+	}
+
 } // end AnimationThread
