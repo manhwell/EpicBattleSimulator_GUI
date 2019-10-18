@@ -21,6 +21,10 @@ public class AnimationThread extends Thread {
 		this.stopper = !this.stopper;  // flip the stopper attribute
 	}
 
+	public void setStopper(boolean newState){
+		this.stopper = newState;
+	}
+
 	public boolean isAnimationRunning(){
 		return this.stopper;
 	}

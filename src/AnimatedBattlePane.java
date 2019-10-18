@@ -39,6 +39,7 @@ public class AnimatedBattlePane extends JFrame{
         EventQueue.invokeLater(new Runnable() { // anonymous launch
             public void run() {
                 try {
+                    JOptionPane.showMessageDialog(null, "Simulation will initialize with default values.");
                     AnimatedBattlePane frame = new AnimatedBattlePane();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -141,7 +142,8 @@ public class AnimatedBattlePane extends JFrame{
                 System.exit(0);
             case "Restart":
                 animation.getAnimationArea().restart();
-                //animation.getAnimationArea().getBattlefield().addArmy();
+                pauseButton.setLabel("Begin Simulation");
+                animation.setStopper(true);
                 break;
             case "Battlefield Settings":
                 this.displaySettingsMenu();
@@ -151,7 +153,7 @@ public class AnimatedBattlePane extends JFrame{
 
     private JButton pauseButton() {
         if (pauseButton == null) {
-            pauseButton = new JButton("Pause");
+            pauseButton = new JButton("Begin Simulation");
             pauseButton.addMouseListener(new BtnPauseButtonListener());
             pauseButton.setBounds((int) (WINDOW_WIDTH * .75), WINDOW_HEIGHT- 100, (int) (WINDOW_WIDTH * .25) - 23, 30);
         }

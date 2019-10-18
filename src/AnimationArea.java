@@ -15,7 +15,7 @@ public class AnimationArea extends JPanel {
     public AnimationArea(){
         super();
         armySize = 10;
-        numArmies = 4;
+        numArmies = 2;
         myBattlefield = new Battlefield(numArmies, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
