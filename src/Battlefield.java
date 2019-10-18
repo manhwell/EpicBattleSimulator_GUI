@@ -74,7 +74,7 @@ public class Battlefield {
 
     public void addArmy(){
         if(this.getNumArmies() < 4) {
-            this.armiesOnField.add(new Army(4, this.armySize, this.windowWidth, this.windowHeight));
+            this.armiesOnField.add(new Army(2, this.armySize, this.windowWidth, this.windowHeight));
         }
     }
 }

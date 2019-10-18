@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class SettingsMenu{
+public class SettingsMenu extends JFrame{
     private JTextField MenuTitle;
     private JButton AddArmy;
     private JPanel BattlefieldSettings;

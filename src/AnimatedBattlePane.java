@@ -20,7 +20,7 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_WIDTH = 750;
     private static int WINDOW_HEIGHT = 600;
     private AnimationThread animation;
-    private JFrame settingsMenu;
+    private SettingsMenu settingsMenu;
 
     private class MyDispatcher implements KeyEventDispatcher {
         @Override
@@ -72,8 +72,7 @@ public class AnimatedBattlePane extends JFrame{
         this.setJMenuBar(jmb);
         this.setVisible(true);
 
-        //this.settingsMenu = new SettingsMenu();
-
+        settingsMenu = new SettingsMenu();
     }
 
     private JPanel getDisplayPanel() {
@@ -100,7 +99,7 @@ public class AnimatedBattlePane extends JFrame{
     private JLabel getLblReportLabel() {
         if (lblReportLabel == null) {
             lblReportLabel = new JLabel("This is where feedback goes...");
-            lblReportLabel.setBounds(10, WINDOW_HEIGHT  - 100, (int) (WINDOW_WIDTH * .75), 50);
+            lblReportLabel.setBounds(10, WINDOW_HEIGHT  - 100, (int) (WINDOW_WIDTH * .75), 30);
         }
         return lblReportLabel;
     }
@@ -144,9 +143,8 @@ public class AnimatedBattlePane extends JFrame{
             case "Exit":
                 System.exit(0);
             case "Restart":
-                //animation.getAnimationArea().restart();
-                //TODO fix null pointer error when you try to add a new army.
-                animation.getAnimationArea().getBattlefield().addArmy();
+                animation.getAnimationArea().restart();
+                //animation.getAnimationArea().getBattlefield().addArmy();
                 break;
             case "Battlefield Settings":
                 this.displaySettingsMenu();
@@ -158,7 +156,7 @@ public class AnimatedBattlePane extends JFrame{
         if (pauseButton == null) {
             pauseButton = new JButton("Pause");
             pauseButton.addMouseListener(new BtnPauseButtonListener());
-            pauseButton.setBounds((int) (WINDOW_WIDTH * .75), WINDOW_HEIGHT- 100, (int) (WINDOW_WIDTH * .25) - 20, 50);
+            pauseButton.setBounds((int) (WINDOW_WIDTH * .75), WINDOW_HEIGHT- 100, (int) (WINDOW_WIDTH * .25) - 23, 30);
         }
         return pauseButton;
     }
@@ -176,8 +174,8 @@ public class AnimatedBattlePane extends JFrame{
             if(animation.isAnimationRunning()) {
                 animation.toggleAnimation();
                 pauseButton().setLabel("Pause");
-                animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(2);
-                animation.getAnimationArea().setNumArmies();
+                //animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(2);
+                //animation.getAnimationArea().setNumArmies();
             }
             else {
                 animation.toggleAnimation();
@@ -187,6 +185,15 @@ public class AnimatedBattlePane extends JFrame{
     }
 
     private void displaySettingsMenu(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame settingsFrame = new JFrame("hello");
+                SettingsMenu settingsMenu = new SettingsMenu();
+                settingsFrame.setContentPane(settingsMenu);
+            }
+        });
+        SettingsMenu settingsMenu = new SettingsMenu();
         this.settingsMenu.setVisible(true);
     }
 }
