@@ -101,4 +101,22 @@ public class Army {
         }
         return numDead;
     }
+
+    public String getArmyColor(){
+        if(this.getSoldier(0).getColor() == Color.red){
+            return "Red";
+        }
+        else if(this.getSoldier(0).getColor() == Color.blue){
+            return "Blue";
+        }
+        else if(this.getSoldier(0).getColor() == Color.yellow){
+            return "Yellow";
+        }
+        else if(this.getSoldier(0).getColor() == Color.green){
+            return "Green";
+        }
+        else{
+            return "Black";
+        }
+    }
 }

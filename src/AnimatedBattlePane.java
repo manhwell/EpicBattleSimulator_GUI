@@ -20,7 +20,6 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_WIDTH = 750;
     private static int WINDOW_HEIGHT = 600;
     private AnimationThread animation;
-    private SettingsMenu settingsMenu;
 
     private class MyDispatcher implements KeyEventDispatcher {
         @Override
@@ -71,8 +70,6 @@ public class AnimatedBattlePane extends JFrame{
         JMenuBar jmb = getMyMenuBar();
         this.setJMenuBar(jmb);
         this.setVisible(true);
-
-        settingsMenu = new SettingsMenu();
     }
 
     private JPanel getDisplayPanel() {
@@ -160,6 +157,7 @@ public class AnimatedBattlePane extends JFrame{
         }
         return pauseButton;
     }
+
     private class DisplayPanelMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
@@ -168,14 +166,13 @@ public class AnimatedBattlePane extends JFrame{
             animation.toggleAnimation();
         }
     }
+
     private class BtnPauseButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(animation.isAnimationRunning()) {
                 animation.toggleAnimation();
                 pauseButton().setLabel("Pause");
-                //animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(2);
-                //animation.getAnimationArea().setNumArmies();
             }
             else {
                 animation.toggleAnimation();
@@ -189,11 +186,15 @@ public class AnimatedBattlePane extends JFrame{
             @Override
             public void run() {
                 JFrame settingsFrame = new JFrame("hello");
-                SettingsMenu settingsMenu = new SettingsMenu();
-                settingsFrame.setContentPane(settingsMenu);
+                SettingsMenu settingsMenu = new SettingsMenu(getAnimation());
+                settingsFrame.setContentPane(settingsMenu.$$$getRootComponent$$$());
+                settingsFrame.pack();
+                settingsFrame.setVisible(true);
             }
         });
-        SettingsMenu settingsMenu = new SettingsMenu();
-        this.settingsMenu.setVisible(true);
+    }
+
+    public AnimationThread getAnimation(){
+        return this.animation;
     }
 }

@@ -43,8 +43,8 @@ public class Battlefield {
 
     public int runRound(Graphics g) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         int numArmiesDead = 0;
-        for(int combatant = 0; combatant < this.armySize; combatant++){ // Go through each combatant
-            for(int currArmy = 0; currArmy < this.getNumArmies(); currArmy++){ // Go through each army
+        for(int currArmy = 0; currArmy < this.getNumArmies(); currArmy++){ // Go through each army
+            for(int combatant = 0; combatant < this.getArmiesOnField().get(currArmy).getArmySize(); combatant++){ // Go through each combatant
                 for(int k = 0; k < this.armiesOnField.size(); k++){
                     if(k != currArmy){
                         for(int z = 0; z < this.getArmy(k).getArmySize(); z++) {

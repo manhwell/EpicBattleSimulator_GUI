@@ -49,4 +49,12 @@ public class AnimationArea extends JPanel {
     public void setNumArmies(){
         this.myBattlefield.getNumArmies();
     }
+
+    public int getWindowWidth(){
+        return WINDOW_WIDTH;
+    }
+
+    public int getWindowHeight(){
+        return WINDOW_HEIGHT;
+    }
 }
