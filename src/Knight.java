@@ -24,8 +24,8 @@ public class Knight extends Combatant{
      * Generates a new Knight class based off passed values.
      * @param team The team # to base the Knights color on.
      */
-    public Knight(int team, int windowWidth, int windowHeight){
-        super(team, windowWidth, windowHeight);
+    public Knight(int team, int power, int windowWidth, int windowHeight){
+        super(team, power, windowWidth, windowHeight);
         this.setName("Knight");
         this.armour = 15;
     }

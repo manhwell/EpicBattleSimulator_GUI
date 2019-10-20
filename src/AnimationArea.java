@@ -8,6 +8,7 @@ public class AnimationArea extends JPanel {
     private Battlefield myBattlefield;
     private int armySize;
     private int numArmies;
+    private int armyStrength;
     private static int WINDOW_WIDTH = 715;
     private static int WINDOW_HEIGHT = 475;
     private int gameOver = 0;
@@ -16,7 +17,8 @@ public class AnimationArea extends JPanel {
         super();
         armySize = 10;
         numArmies = 2;
-        myBattlefield = new Battlefield(numArmies, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
+        armyStrength = 25;
+        myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     public int animate(Graphics g) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -39,7 +41,7 @@ public class AnimationArea extends JPanel {
     }
 
     public void restart(){
-        myBattlefield = new Battlefield(numArmies, armySize, WINDOW_WIDTH, WINDOW_HEIGHT);
+        myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     public Battlefield getBattlefield(){

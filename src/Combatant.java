@@ -45,7 +45,7 @@ public class Combatant {
      * Generates a new Combatant class based on passed variables.
      * @param team The team to base the Combatants color on.
      */
-    public Combatant(int team, int windowWidth, int windowHeight){
+    public Combatant(int team, int power, int windowWidth, int windowHeight){
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
         this.size = (int) (Math.random() * 10) + 10; // vary size
@@ -53,7 +53,7 @@ public class Combatant {
         if(this.speed < 3){
             this.speed = 3; // slowest a combatant can be
         }
-        this.strength = (int) (Math.random() * 50) + 1; // vary strength
+        this.strength = power;
         this.courage = 50;
         this.health = 100 + this.size; // fi you are bigger you can take more hits
         this.movementDir = new Vector330Class(1, 1);

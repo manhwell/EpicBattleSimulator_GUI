@@ -184,6 +184,7 @@ public class AnimatedBattlePane extends JFrame{
     }
 
     private void displaySettingsMenu(){
+        this.animation.setStopper(true);
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

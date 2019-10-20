@@ -13,25 +13,25 @@ public class Battlefield {
     private int windowHeight;
 
     public Battlefield(){
-        this.armiesOnField.add(new Army(0, 10, 715, 475));
-        this.armiesOnField.add(new Army(1, 10, 715, 475));
+        this.armiesOnField.add(new Army(0, 10, 25, 715, 475));
+        this.armiesOnField.add(new Army(1, 10, 25, 715, 475));
         this.armySize = 10;
     }
 
-    public Battlefield(int numArmies, int armySize, int windowWidth, int windowHeight){
-        for(int i = 0; i < numArmies; i++){
-            this.armiesOnField.add(new Army(i, armySize, windowWidth, windowHeight));
-        }
+    public Battlefield(int numArmies, int armySize, int power, int windowWidth, int windowHeight){
         this.armySize = armySize;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        for(int i = 0; i < numArmies; i++){
+            this.armiesOnField.add(new Army(i, this.armySize, power, this.windowWidth, this.windowHeight));
+        }
     }
 
-    public void draw(Graphics g){
+    /*public void draw(Graphics g){
         for(int i = 0; i < this.armiesOnField.size(); i++){
             this.armiesOnField.get(i).drawArmy(g);
         }
-    }
+    }*/
 
     public Army getArmy(int armyNum){
         return this.armiesOnField.get(armyNum);
@@ -58,7 +58,7 @@ public class Battlefield {
             }
         }
         for(int i = 0; i < this.getNumArmies(); i++) {
-            if(this.getArmy(i).checkDead() >= this.armySize){
+            if(this.getArmy(i).checkDead() >= this.getArmy(i).getArmySize()){
                 numArmiesDead++;
             }
         }
@@ -72,9 +72,9 @@ public class Battlefield {
         return armiesOnField;
     }
 
-    public void addArmy(){
+    /*public void addArmy(){
         if(this.getNumArmies() < 4) {
             this.armiesOnField.add(new Army(2, this.armySize, this.windowWidth, this.windowHeight));
         }
-    }
+    }*/
 }
