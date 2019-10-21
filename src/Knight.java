@@ -22,7 +22,10 @@ public class Knight extends Combatant{
 
     /**
      * Generates a new Knight class based off passed values.
-     * @param team The team # to base the Knights color on.
+     * @param team is the team # to base the Knights color on.
+     * @param power is the power if a knight.
+     * @param windowWidth is the width of the battlefield.
+     * @param windowHeight is the height of the battlefield.
      */
     public Knight(int team, int power, int windowWidth, int windowHeight){
         super(team, power, windowWidth, windowHeight);

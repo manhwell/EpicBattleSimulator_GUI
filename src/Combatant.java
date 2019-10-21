@@ -43,7 +43,10 @@ public class Combatant {
 
     /**
      * Generates a new Combatant class based on passed variables.
-     * @param team The team to base the Combatants color on.
+     * @param team is the team to base the Combatants color on.
+     * @param power is the power of a combatant.
+     * @param windowWidth is the width of the battlefield.
+     * @param windowHeight is the height of the battlefield.
      */
     public Combatant(int team, int power, int windowWidth, int windowHeight){
         this.windowHeight = windowHeight;
@@ -210,6 +213,10 @@ public class Combatant {
      */
     public void setWindowWidth( int width ) { this.windowWidth = width; }
 
+    /**
+     * Gets the width of the battlefield.
+     * @return the width of the battlefield.
+     */
     public int getWindowWidth(){
         return this.windowWidth;
     }
@@ -220,15 +227,13 @@ public class Combatant {
      */
     public void setWindowHeight( int height ) { this.windowHeight = height; }
 
+    /**
+     * Gets the height of the battlefield.
+     * @return the height of the battlefield.
+     */
     public int getWindowHeight(){
         return this.windowHeight;
     }
-
-    /**
-     * Sets the graphics window to a certain graphics type.
-     * @param g The type of graphics the window will display.
-
-    public static void setGraphics2D( Graphics2D g ) { }*/
 
     /**
      * Draws a Combatant on the graphics window.
@@ -305,6 +310,11 @@ public class Combatant {
         }
     }
 
+    /**
+     * Checks the number of enemies that are dead on the battlefield.
+     * @param enemyArmy is the array list of enemy combatants.
+     * @return the number of dead enemies.
+     */
     public int checkEnemyDead(ArrayList<Combatant> enemyArmy){
         int numDead = 0;
         for(int i = 0; i < enemyArmy.size(); i++){

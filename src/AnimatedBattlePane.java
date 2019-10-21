@@ -8,12 +8,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * AnimatedBattlePane() provides a JFrame to run a battle simulation on.
+ * @author C2C Manuel Riolo
+ */
 public class AnimatedBattlePane extends JFrame{
 
     private JPanel contentPane;
     private JPanel displayPanel;
     private JMenuBar menuBar;
-    private JLabel lblReportLabel;
     private JButton pauseButton;
     private static int WINDOW_X = 400;
     private static int WINDOW_Y = 100;
@@ -21,7 +24,7 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_HEIGHT = 600;
     private AnimationThread animation;
 
-    private class MyDispatcher implements KeyEventDispatcher {
+    /*private class MyDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
@@ -33,8 +36,12 @@ public class AnimatedBattlePane extends JFrame{
             }
             return false;
         }
-    }
+    }*/
 
+    /**
+     * Created the battle pane for the simulation.
+     * @param args is a command line argument to pass to main.
+     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() { // anonymous launch
             public void run() {
@@ -49,6 +56,9 @@ public class AnimatedBattlePane extends JFrame{
         });
     }
 
+    /**
+     * Default deceleration for an AnimatedBattlePane;
+     */
     public AnimatedBattlePane() {
         setTitle("Epic Battle Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,20 +69,23 @@ public class AnimatedBattlePane extends JFrame{
         contentPane.setLayout(null);
         contentPane.add(getMyMenuBar());
         contentPane.add(getDisplayPanel());
-        contentPane.add(getLblReportLabel());
         contentPane.add(pauseButton());
 
-        /////////// special keyboard handling //////////////////
+       /* /////////// special keyboard handling //////////////////
         KeyboardFocusManager manager =
                 KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new MyDispatcher());
-        /////////// end of special added code //////////////////
+        /////////// end of special added code //////////////////*/
 
         JMenuBar jmb = getMyMenuBar();
         this.setJMenuBar(jmb);
         this.setVisible(true);
     }
 
+    /**
+     * Gets the panel that displays the battle animation.
+     * @return the JPanel containing the battle.
+     */
     private JPanel getDisplayPanel() {
         if (displayPanel == null) {
 
@@ -80,7 +93,6 @@ public class AnimatedBattlePane extends JFrame{
             displayPanel = new AnimationArea(); // subclass of JPanel();
             ///////////////
 
-            displayPanel.addMouseListener(new DisplayPanelMouseListener());
             displayPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
             displayPanel.setBackground(Color.WHITE);
             displayPanel.setBounds(10, 11, WINDOW_WIDTH - 35, WINDOW_HEIGHT - 125);
@@ -94,14 +106,11 @@ public class AnimatedBattlePane extends JFrame{
         }
         return displayPanel;
     }
-    private JLabel getLblReportLabel() {
-        if (lblReportLabel == null) {
-            lblReportLabel = new JLabel("This is where feedback goes...");
-            lblReportLabel.setBounds(10, WINDOW_HEIGHT  - 100, (int) (WINDOW_WIDTH * .75), 30);
-        }
-        return lblReportLabel;
-    }
 
+    /**
+     * Gets the menu bar displayed on the JFrame.
+     * @return the JMenuBar containing options to edit the battle.
+     */
     private JMenuBar getMyMenuBar(){
         if(menuBar == null){
             menuBar = new JMenuBar();
@@ -132,6 +141,10 @@ public class AnimatedBattlePane extends JFrame{
         return menuBar;
     }
 
+    /**
+     * Is the function where actions performed on the JMenuBar are handled.
+     * @param ae is the action performed on the JMenuBar.
+     */
     public void actionPerformed(ActionEvent ae){
         String commandStr = ae.getActionCommand();
         switch (commandStr) {
@@ -151,6 +164,10 @@ public class AnimatedBattlePane extends JFrame{
         }
     }
 
+    /**
+     * Is the pause button on the main screen for the simulation.
+     * @return the pause button that can pause and unpause the animation.
+     */
     private JButton pauseButton() {
         if (pauseButton == null) {
             pauseButton = new JButton("Begin Simulation");
@@ -160,15 +177,18 @@ public class AnimatedBattlePane extends JFrame{
         return pauseButton;
     }
 
-    private class DisplayPanelMouseListener extends MouseAdapter {
+    /*private class DisplayPanelMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             lblReportLabel.setText("Mouse clicked at (" + mouseEvent.getX() +
                     ", " + mouseEvent.getY() + ")");
             animation.toggleAnimation();
         }
-    }
+    }*/
 
+    /**
+     * Is the action listener for the pause button and pauses and unpauses the battle when pressed.
+     */
     private class BtnPauseButtonListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -183,6 +203,9 @@ public class AnimatedBattlePane extends JFrame{
         }
     }
 
+    /**
+     * Makes the JMenuBar visible to the user.
+     */
     private void displaySettingsMenu(){
         this.animation.setStopper(true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -197,6 +220,10 @@ public class AnimatedBattlePane extends JFrame{
         });
     }
 
+    /**
+     * Gets the animation running on the JFrame.
+     * @return the animation running on the JFrame.
+     */
     public AnimationThread getAnimation(){
         return this.animation;
     }

@@ -25,7 +25,10 @@ public class Archer extends Combatant {
 
     /**
      * Generates a new Archer class based on passed variables.
-     * @param team The team to base the Archer's color on.
+     * @param team is the team to base the Archer's color on.
+     * @param power is the power of an archer.
+     * @param windowWidth is the width of the battlefield.
+     * @param windowHeight is the height of the battlefield.
      */
     public Archer(int team, int power, int windowWidth, int windowHeight){
         // Setup an archer and give them a team color.

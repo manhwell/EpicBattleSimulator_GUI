@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * SettingsMenu() provides a JFrame with an array of options to change the battlefield.
+ *
+ * @author C2C Manuel Riolo
+ */
 public class SettingsMenu extends JFrame {
     private JPanel BattlefieldSettings;
     private JComboBox ColorSelectorComboBox;
@@ -18,6 +23,11 @@ public class SettingsMenu extends JFrame {
 
     private AnimationThread animation;
 
+    /**
+     * Creates a new JFrame that contains options for the battle simulation.
+     *
+     * @param animation is the animationThread that contains the animation.
+     */
     public SettingsMenu(AnimationThread animation) {
         this.animation = animation;
 
@@ -33,6 +43,11 @@ public class SettingsMenu extends JFrame {
         ColorSelectorComboBox.addItem("Green");
     }
 
+    /**
+     * Handles what to do when the delete button is pressed.
+     *
+     * @param ae is the action performed on the delete button.
+     */
     public void deleteButtonListener(ActionEvent ae) {
         int selectedArmy = armySelectorComboBox.getSelectedIndex();
         animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(selectedArmy);
@@ -40,6 +55,11 @@ public class SettingsMenu extends JFrame {
         updateArmySelector();
     }
 
+    /**
+     * Handles what to do when the add army button is pressed.
+     *
+     * @param ae is the action performed on the add army button.
+     */
     public void addArmyButtonListener(ActionEvent ae) {
         if (this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size() <= 3) {
             String selectedColor = (String) ColorSelectorComboBox.getSelectedItem();
@@ -73,6 +93,9 @@ public class SettingsMenu extends JFrame {
         }
     }
 
+    /**
+     * Updates the army selector bar so that you can select any army currently on the field.
+     */
     public void updateArmySelector() {
         armySelectorComboBox.removeAllItems();
         for (int i = 0; i < this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size(); i++) {
@@ -147,7 +170,7 @@ public class SettingsMenu extends JFrame {
         armyPowerSlider.setMajorTickSpacing(10);
         armyPowerSlider.setPaintLabels(true);
         armyPowerSlider.setPaintTicks(true);
-        armyPowerSlider.setValue(25);
+        armyPowerSlider.setValue(35);
         BattlefieldSettings.add(armyPowerSlider, new com.intellij.uiDesigner.core.GridConstraints(5, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 

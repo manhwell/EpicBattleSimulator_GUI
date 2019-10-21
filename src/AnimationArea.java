@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * AnimationArea() provides a JPanel to display a battle simulation inside a JFrame.
+ * @author C2C Manuel Riolo
+ */
 public class AnimationArea extends JPanel {
     private Battlefield myBattlefield;
     private int armySize;
@@ -13,19 +17,34 @@ public class AnimationArea extends JPanel {
     private static int WINDOW_HEIGHT = 475;
     private int gameOver = 0;
 
+    /**
+     * Creates a new AnimationArea with default values.
+     */
     public AnimationArea(){
         super();
         armySize = 10;
         numArmies = 2;
-        armyStrength = 25;
+        armyStrength = 35;
         myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
+    /**
+     * Animates a round on the battle.
+     * @param g is the graphics that are being used for the simulation.
+     * @return a boolean value for whether the battle is over.
+     * @throws UnsupportedAudioFileException For errors in the audio stream.
+     * @throws IOException For a file not found
+     * @throws LineUnavailableException For a part of the file not findable.
+     */
     public int animate(Graphics g) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         gameOver = myBattlefield.runRound(g);
         return gameOver;
     }
 
+    /**
+     * Draws the battle animation to the pane.
+     * @param g is the graphics that the animation is using.
+     */
     public void paint(Graphics g){
 
         // clear the background
@@ -40,22 +59,40 @@ public class AnimationArea extends JPanel {
 
     }
 
+    /**
+     * Restarts the animation to its default values.
+     */
     public void restart(){
         myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
+    /**
+     * Gets the battlefield currently running.
+     * @return the battlefield object that has the simulation status in it.
+     */
     public Battlefield getBattlefield(){
         return this.myBattlefield;
     }
 
+    /**
+     * Sets the current number of armies to the number of armies on the battlefield.
+     */
     public void setNumArmies(){
         this.myBattlefield.getNumArmies();
     }
 
+    /**
+     * Gets the window width of the simulation.
+     * @return the simulation window width.
+     */
     public int getWindowWidth(){
         return WINDOW_WIDTH;
     }
 
+    /**
+     * Gets the window height of the simulation.
+     * @return the simulation window height.
+     */
     public int getWindowHeight(){
         return WINDOW_HEIGHT;
     }

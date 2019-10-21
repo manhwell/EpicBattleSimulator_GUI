@@ -29,8 +29,11 @@ public class Army {
 
     /**
      * Generates a new Army class based on passed variables.
-     * @param team The team # of the army.
-     * @param armySize The size of as army.
+     * @param team is the team # of the army.
+     * @param armySize is the size of an army.
+     * @param power is the power of an army.
+     * @param windowWidth is the width of the battlefield.
+     * @param windowHeight is the height of the battlefield.
      */
     public Army(int team, int armySize, int power, int windowWidth, int windowHeight){
         Army = new Combatant[armySize]; // Allocate space for a proper army
@@ -102,6 +105,10 @@ public class Army {
         return numDead;
     }
 
+    /**
+     * Gets the string value of an armies color
+     * @return the string value of an armies color
+     */
     public String getArmyColor(){
         if(this.getSoldier(0).getColor() == Color.red){
             return "Red";
