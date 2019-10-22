@@ -20,6 +20,9 @@ public class SettingsMenu extends JFrame {
     private JLabel armySelectorLabel;
     private JComboBox armySelectorComboBox;
     private JSlider armyPowerSlider;
+    private JButton updateArmyButton;
+    private JLabel speedLabel;
+    private JSlider speedSlider;
 
     private AnimationThread animation;
 
@@ -34,6 +37,8 @@ public class SettingsMenu extends JFrame {
         deleteArmyButton.addActionListener(this::deleteButtonListener);
 
         AddArmyButton.addActionListener(this::addArmyButtonListener);
+
+        updateArmyButton.addActionListener(this::updateArmyListener);
 
         updateArmySelector();
 
@@ -66,6 +71,7 @@ public class SettingsMenu extends JFrame {
             int team;
             int armySize;
             int armyStrength;
+            int speed;
             assert selectedColor != null;
             switch (selectedColor) {
                 case "Blue":
@@ -86,11 +92,20 @@ public class SettingsMenu extends JFrame {
             }
             armySize = ArmySizeSlider.getValue();
             armyStrength = armyPowerSlider.getValue();
-            this.animation.getAnimationArea().getBattlefield().getArmiesOnField().add(new Army(team, armySize, armyStrength, animation.getAnimationArea().getWindowWidth(), animation.getAnimationArea().getWindowHeight()));
+            speed = speedSlider.getValue();
+            this.animation.getAnimationArea().getBattlefield().getArmiesOnField().add(new Army(team, armySize, armyStrength, speed, animation.getAnimationArea().getWindowWidth(), animation.getAnimationArea().getWindowHeight()));
             updateArmySelector();
         } else {
             JOptionPane.showMessageDialog(null, "No more than 4 armies at a time.", "Too many armies", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void updateArmyListener(ActionEvent ae) {
+        int selectedArmy = armySelectorComboBox.getSelectedIndex();
+        animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmySpeed(speedSlider.getValue());
+        animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmyStrength(armyPowerSlider.getValue());
+        animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmyColor((String) ColorSelectorComboBox.getSelectedItem());
+        updateArmySelector();
     }
 
     /**
@@ -120,7 +135,7 @@ public class SettingsMenu extends JFrame {
      */
     private void $$$setupUI$$$() {
         BattlefieldSettings = new JPanel();
-        BattlefieldSettings.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(10, 4, new Insets(0, 0, 0, 0), -1, -1));
+        BattlefieldSettings.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(12, 4, new Insets(0, 0, 0, 0), -1, -1));
         ColorSelectorComboBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         ColorSelectorComboBox.setModel(defaultComboBoxModel1);
@@ -134,13 +149,13 @@ public class SettingsMenu extends JFrame {
         ArmySizeSlider.setPaintLabels(true);
         ArmySizeSlider.setPaintTicks(true);
         ArmySizeSlider.setValue(10);
-        BattlefieldSettings.add(ArmySizeSlider, new com.intellij.uiDesigner.core.GridConstraints(8, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BattlefieldSettings.add(ArmySizeSlider, new com.intellij.uiDesigner.core.GridConstraints(9, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ArmySizeLabel = new JLabel();
         ArmySizeLabel.setText("Army Size");
-        BattlefieldSettings.add(ArmySizeLabel, new com.intellij.uiDesigner.core.GridConstraints(7, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BattlefieldSettings.add(ArmySizeLabel, new com.intellij.uiDesigner.core.GridConstraints(8, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ArmyColorLabel = new JLabel();
         ArmyColorLabel.setText("Color");
-        BattlefieldSettings.add(ArmyColorLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BattlefieldSettings.add(ArmyColorLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         SettingsMenuLabel = new JLabel();
         SettingsMenuLabel.setText("Battlefield Settings");
         BattlefieldSettings.add(SettingsMenuLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -156,13 +171,13 @@ public class SettingsMenu extends JFrame {
         BattlefieldSettings.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 1, false));
         armySelectorLabel = new JLabel();
         armySelectorLabel.setText("Army Selector");
-        BattlefieldSettings.add(armySelectorLabel, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BattlefieldSettings.add(armySelectorLabel, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         armySelectorComboBox = new JComboBox();
-        BattlefieldSettings.add(armySelectorComboBox, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BattlefieldSettings.add(armySelectorComboBox, new com.intellij.uiDesigner.core.GridConstraints(6, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTHWEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
-        BattlefieldSettings.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10), 0, false));
+        BattlefieldSettings.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10), 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer4 = new com.intellij.uiDesigner.core.Spacer();
-        BattlefieldSettings.add(spacer4, new com.intellij.uiDesigner.core.GridConstraints(9, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10), 0, false));
+        BattlefieldSettings.add(spacer4, new com.intellij.uiDesigner.core.GridConstraints(11, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, new Dimension(10, 10), new Dimension(10, 10), new Dimension(10, 10), 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Power");
         BattlefieldSettings.add(label1, new com.intellij.uiDesigner.core.GridConstraints(4, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -172,6 +187,21 @@ public class SettingsMenu extends JFrame {
         armyPowerSlider.setPaintTicks(true);
         armyPowerSlider.setValue(35);
         BattlefieldSettings.add(armyPowerSlider, new com.intellij.uiDesigner.core.GridConstraints(5, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        updateArmyButton = new JButton();
+        updateArmyButton.setText("Update Army");
+        BattlefieldSettings.add(updateArmyButton, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        speedLabel = new JLabel();
+        speedLabel.setText("Speed");
+        BattlefieldSettings.add(speedLabel, new com.intellij.uiDesigner.core.GridConstraints(6, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        speedSlider = new JSlider();
+        speedSlider.setMajorTickSpacing(2);
+        speedSlider.setMaximum(20);
+        speedSlider.setPaintLabels(true);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintTrack(true);
+        speedSlider.setSnapToTicks(false);
+        speedSlider.setValue(10);
+        BattlefieldSettings.add(speedSlider, new com.intellij.uiDesigner.core.GridConstraints(7, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

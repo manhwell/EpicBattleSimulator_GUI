@@ -30,9 +30,9 @@ public class Archer extends Combatant {
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
-    public Archer(int team, int power, int windowWidth, int windowHeight){
+    public Archer(int team, int power, int speed, int windowWidth, int windowHeight){
         // Setup an archer and give them a team color.
-        super(team, power, windowWidth, windowHeight);
+        super(team, power, speed, windowWidth, windowHeight);
         this.setName("Archer");
         this.range = 75;
         this.accuracy = 2;

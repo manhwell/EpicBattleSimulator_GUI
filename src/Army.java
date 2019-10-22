@@ -35,21 +35,21 @@ public class Army {
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
-    public Army(int team, int armySize, int power, int windowWidth, int windowHeight){
+    public Army(int team, int armySize, int power, int speed, int windowWidth, int windowHeight){
         Army = new Combatant[armySize]; // Allocate space for a proper army
         for(int i = 0; i < armySize; i++){
             int combatantClass = (int) (Math.random() * 2) + 1; // Random variable to choose what to put in the army.
             if(combatantClass == 1){  // Generate a melee class
                 int meleeClass = (int) (Math.random() * 2) + 1; // Random variable to choose what melee class to put in the army
                 if(meleeClass == 1) { // Create a combatant.
-                    this.Army[i] = new Combatant(team, power, windowWidth, windowHeight);
+                    this.Army[i] = new Combatant(team, power, speed, windowWidth, windowHeight);
                 }
                 else{ // Create a knight
-                    this.Army[i] = new Knight(team, power, windowWidth, windowHeight);
+                    this.Army[i] = new Knight(team, power, speed, windowWidth, windowHeight);
                 }
             }
             else { // Create a ranger class
-                this.Army[i] = new Archer(team, power, windowWidth, windowHeight);
+                this.Army[i] = new Archer(team, power, speed, windowWidth, windowHeight);
             }
         }
         this.armySize = armySize;
@@ -124,6 +124,42 @@ public class Army {
         }
         else{
             return "Black";
+        }
+    }
+
+    public void setArmySpeed(int speed){
+        for(int i = 0; i < this.Army.length; i++){
+            this.Army[i].setSpeed(speed);
+        }
+    }
+
+    public void setArmyStrength(int strength){
+        for(int i = 0; i < this.Army.length; i++){
+            this.Army[i].setStrength(strength);
+        }
+    }
+
+    public void setArmyColor(String chosenColor){
+        Color newColor;
+        switch (chosenColor) {
+            case "Blue":
+                 newColor = Color.blue;
+                break;
+            case "Red":
+                newColor = Color.red;
+                break;
+            case "Green":
+                newColor = Color.green;
+                break;
+            case "Yellow":
+                newColor = Color.yellow;
+                break;
+            default:
+                newColor = Color.black;
+                break;
+        }
+        for(int i = 0; i < this.Army.length; i++){
+            this.Army[i].setColor(newColor);
         }
     }
 }

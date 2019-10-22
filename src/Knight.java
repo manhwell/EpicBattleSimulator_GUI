@@ -27,8 +27,8 @@ public class Knight extends Combatant{
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
-    public Knight(int team, int power, int windowWidth, int windowHeight){
-        super(team, power, windowWidth, windowHeight);
+    public Knight(int team, int power, int speed, int windowWidth, int windowHeight){
+        super(team, power, speed, windowWidth, windowHeight);
         this.setName("Knight");
         this.armour = 15;
     }

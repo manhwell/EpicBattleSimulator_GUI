@@ -20,8 +20,8 @@ public class Battlefield {
      * Creates a new Battlefield object based on default values.
      */
     public Battlefield(){
-        this.armiesOnField.add(new Army(0, 10, 25, 715, 475));
-        this.armiesOnField.add(new Army(1, 10, 25, 715, 475));
+        this.armiesOnField.add(new Army(0, 10, 25, 2, 715, 475));
+        this.armiesOnField.add(new Army(1, 10, 25, 2, 715, 475));
         this.armySize = 10;
     }
 
@@ -33,12 +33,12 @@ public class Battlefield {
      * @param windowWidth is the width on the battlefield.
      * @param windowHeight is the height of the battlefield
      */
-    public Battlefield(int numArmies, int armySize, int power, int windowWidth, int windowHeight){
+    public Battlefield(int numArmies, int armySize, int power, int speed, int windowWidth, int windowHeight){
         this.armySize = armySize;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         for(int i = 0; i < numArmies; i++){
-            this.armiesOnField.add(new Army(i, this.armySize, power, this.windowWidth, this.windowHeight));
+            this.armiesOnField.add(new Army(i, this.armySize, power, speed, this.windowWidth, this.windowHeight));
         }
     }
 
@@ -95,7 +95,7 @@ public class Battlefield {
                 this.armiesOnField.remove(this.armiesOnField.get(i));
             }
         }
-        if(numArmiesDead == this.armiesOnField.size() - 1){
+        if(this.armiesOnField.size() == 1){
             return 1;
         }
         else return 0;

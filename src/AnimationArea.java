@@ -13,6 +13,7 @@ public class AnimationArea extends JPanel {
     private int armySize;
     private int numArmies;
     private int armyStrength;
+    private int speed;
     private static int WINDOW_WIDTH = 715;
     private static int WINDOW_HEIGHT = 475;
     private int gameOver = 0;
@@ -22,10 +23,11 @@ public class AnimationArea extends JPanel {
      */
     public AnimationArea(){
         super();
-        armySize = 10;
-        numArmies = 2;
-        armyStrength = 35;
-        myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.armySize = 10;
+        this.numArmies = 2;
+        this.armyStrength = 35;
+        this.speed = 7;
+        myBattlefield = new Battlefield(this.numArmies, this.armySize, this.armyStrength, this.speed, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     /**
@@ -63,7 +65,7 @@ public class AnimationArea extends JPanel {
      * Restarts the animation to its default values.
      */
     public void restart(){
-        myBattlefield = new Battlefield(numArmies, armySize, armyStrength, WINDOW_WIDTH, WINDOW_HEIGHT);
+        myBattlefield = new Battlefield(this.numArmies, this.armySize, this.armyStrength, this.speed, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     /**

@@ -48,14 +48,11 @@ public class Combatant {
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
-    public Combatant(int team, int power, int windowWidth, int windowHeight){
+    public Combatant(int team, int power, int speed, int windowWidth, int windowHeight){
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
         this.size = (int) (Math.random() * 10) + 10; // vary size
-        this.speed = ((int) (Math.random() * 4) + 3) - this.size; // the bigger you are the slower you go
-        if(this.speed < 3){
-            this.speed = 3; // slowest a combatant can be
-        }
+        this.speed = speed;
         this.strength = power;
         this.courage = 50;
         this.health = 100 + this.size; // fi you are bigger you can take more hits
@@ -119,6 +116,14 @@ public class Combatant {
         this.team = team;
     }
 
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    public void setStrength(int strength){
+        this.strength = strength;
+    }
+
     /**
      * Gets the X-cord of a Combatant.
      * @return The integer value of a Combatant's X-cord.
@@ -157,14 +162,6 @@ public class Combatant {
      */
     public int getSize(){
         return this.size;
-    }
-
-    /**
-     * Gets the team # of a Combatant.
-     * @return The integer value of a Combatant's team #.
-     */
-    public int getTeam(){
-        return this.team;
     }
 
     /**
@@ -260,6 +257,9 @@ public class Combatant {
         double smallestDistance = 10000; // Initial set very large.
         int closestEnemy = 0;
         // Find the closest enemy.
+        if(enemyArmy.size() == 0){ // If there are no enemies left, just skip it all.
+            return;
+        }
         for(int i = 0; i < enemyArmy.size(); i++){
             if(this.getHealth() > 0 && enemyArmy.get(i).getHealth() > 0) { // Confirm they are both alive.
                 Vector330Class findDist = enemyArmy.get(i).currPos.subtract(this.currPos); // Finding vector between the 2
@@ -272,7 +272,7 @@ public class Combatant {
         }
         // Get that vector between you and the closest enemy and move toward them based on your speed.
         Vector330Class d = enemyArmy.get(closestEnemy).currPos.subtract(this.currPos);
-        this.movementDir = d.normalize().scale(this.speed); // Increases distance traveled by speed.
+        this.movementDir = d.normalize().scale(2);
         if(this.speed > speedToken) { // A higher speed = a greater chance to move this turn.
             // If the enemy army is twice your size, run away.
             if(8 * (friendlyArmy.getArmySize() - friendlyArmy.checkDead()) < (enemyArmy.size() - this.checkEnemyDead(enemyArmy))) {
