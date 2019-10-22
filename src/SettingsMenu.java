@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
  * @author C2C Manuel Riolo
  */
 public class SettingsMenu extends JFrame {
+
+    // Initializing variables.
     private JPanel BattlefieldSettings;
     private JComboBox ColorSelectorComboBox;
     private JLabel ArmyAttributesLabel;
@@ -32,16 +34,17 @@ public class SettingsMenu extends JFrame {
      * @param animation is the animationThread that contains the animation.
      */
     public SettingsMenu(AnimationThread animation) {
-        this.animation = animation;
+        this.animation = animation; // Set the animation this frame is going to be interacting with.
 
+        // Add listeners to the 3 buttons on the frame.
         deleteArmyButton.addActionListener(this::deleteButtonListener);
-
         AddArmyButton.addActionListener(this::addArmyButtonListener);
-
         updateArmyButton.addActionListener(this::updateArmyListener);
 
+        // Update the army selector to reflect the current available armies on the field.
         updateArmySelector();
 
+        // Initialize tha valid colors to choose from.
         ColorSelectorComboBox.addItem("Red");
         ColorSelectorComboBox.addItem("Blue");
         ColorSelectorComboBox.addItem("Yellow");
@@ -54,10 +57,10 @@ public class SettingsMenu extends JFrame {
      * @param ae is the action performed on the delete button.
      */
     public void deleteButtonListener(ActionEvent ae) {
-        int selectedArmy = armySelectorComboBox.getSelectedIndex();
-        animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(selectedArmy);
-        animation.getAnimationArea().setNumArmies();
-        updateArmySelector();
+        int selectedArmy = armySelectorComboBox.getSelectedIndex(); // Decide which army they've selected based on the current army chosen.
+        animation.getAnimationArea().getBattlefield().getArmiesOnField().remove(selectedArmy); // Delete the army.
+        animation.getAnimationArea().setNumArmies(); // Update the number of armies alive.
+        updateArmySelector(); // Refresh the active armies you can select from.
     }
 
     /**
@@ -66,16 +69,18 @@ public class SettingsMenu extends JFrame {
      * @param ae is the action performed on the add army button.
      */
     public void addArmyButtonListener(ActionEvent ae) {
-        if (this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size() <= 3) {
-            String selectedColor = (String) ColorSelectorComboBox.getSelectedItem();
+        if (this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size() <= 3) { // Max of 4 armies at a time.
+            String selectedColor = (String) ColorSelectorComboBox.getSelectedItem(); // Decide which army they've selected based on the current army chosen.
+            // Values that will be updated.
             int team;
             int armySize;
             int armyStrength;
             int speed;
+            ///////////////////////////////
             assert selectedColor != null;
-            switch (selectedColor) {
+            switch (selectedColor) { // Determine what color they want the army to be.
                 case "Blue":
-                    team = 0;
+                    team = 0; // Each color has an int value associated with it.
                     break;
                 case "Red":
                     team = 1;
@@ -87,15 +92,16 @@ public class SettingsMenu extends JFrame {
                     team = 3;
                     break;
                 default:
-                    team = 0;
+                    team = 4;
                     break;
             }
-            armySize = ArmySizeSlider.getValue();
-            armyStrength = armyPowerSlider.getValue();
-            speed = speedSlider.getValue();
+            armySize = ArmySizeSlider.getValue(); // Determine the new army size.
+            armyStrength = armyPowerSlider.getValue(); // Determine the new army power.
+            speed = speedSlider.getValue(); // Determine the new army speed.
+            // Add a new army based on selected values.
             this.animation.getAnimationArea().getBattlefield().getArmiesOnField().add(new Army(team, armySize, armyStrength, speed, animation.getAnimationArea().getWindowWidth(), animation.getAnimationArea().getWindowHeight()));
-            updateArmySelector();
-        } else {
+            updateArmySelector(); // Refresh the active armies you can select from.
+        } else { // Make sure there are a maximum of 4 armies on the field at a time.
             JOptionPane.showMessageDialog(null, "No more than 4 armies at a time.", "Too many armies", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -105,21 +111,23 @@ public class SettingsMenu extends JFrame {
      * @param ae is the action performed on the update army button.
      */
     public void updateArmyListener(ActionEvent ae) {
-        int selectedArmy = armySelectorComboBox.getSelectedIndex();
+        int selectedArmy = armySelectorComboBox.getSelectedIndex(); // Decide which army they've selected based on the current army chosen.
+        // Update an armies values based on currently selected values.
         animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmySpeed(speedSlider.getValue());
         animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmyStrength(armyPowerSlider.getValue());
         animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmyColor((String) ColorSelectorComboBox.getSelectedItem());
-        updateArmySelector();
+        ///////////////////////////////////////////////////////////////
+        updateArmySelector(); // Refresh the active armies you can select from.
     }
 
     /**
      * Updates the army selector bar so that you can select any army currently on the field.
      */
     public void updateArmySelector() {
-        armySelectorComboBox.removeAllItems();
-        for (int i = 0; i < this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size(); i++) {
-            String color = animation.getAnimationArea().getBattlefield().getArmiesOnField().get(i).getArmyColor();
-            this.armySelectorComboBox.addItem(color + " Army");
+        armySelectorComboBox.removeAllItems(); // Clear the JComboBox
+        for (int i = 0; i < this.animation.getAnimationArea().getBattlefield().getArmiesOnField().size(); i++) { // Loop through the active armies.
+            String color = animation.getAnimationArea().getBattlefield().getArmiesOnField().get(i).getArmyColor(); // Get the armies color.
+            this.armySelectorComboBox.addItem(color + " Army"); // Add the armies name to the JComboBox.
         }
     }
 

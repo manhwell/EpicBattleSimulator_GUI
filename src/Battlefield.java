@@ -10,6 +10,8 @@ import java.util.List;
  * @author C2C Manuel Riolo
  */
 public class Battlefield {
+
+    // Initializing variables.
     private List<Army> armiesOnField = new ArrayList<>();
     private List<Combatant> enemiesOnField = new ArrayList<>();
     private int armySize;
@@ -37,7 +39,7 @@ public class Battlefield {
         this.armySize = armySize;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
-        for(int i = 0; i < numArmies; i++){
+        for(int i = 0; i < numArmies; i++){ // For however many armies are passed, create them based on other passed values.
             this.armiesOnField.add(new Army(i, this.armySize, power, speed, this.windowWidth, this.windowHeight));
         }
     }
@@ -71,24 +73,24 @@ public class Battlefield {
         for(int currArmy = 0; currArmy < this.getNumArmies(); currArmy++){ // Go through each army
             for(int combatant = 0; combatant < this.getArmiesOnField().get(currArmy).getArmySize(); combatant++){ // Go through each combatant
                 for(int k = 0; k < this.armiesOnField.size(); k++){
-                    if(k != currArmy){
+                    if(k != currArmy){ // For each army that isn't your own, add its combatants to the list of enemies.
                         for(int z = 0; z < this.getArmy(k).getArmySize(); z++) {
                             this.enemiesOnField.add(this.getArmy(k).getSoldier(z));
                         }
                     }
                 }
-                this.armiesOnField.get(currArmy).getSoldier(combatant).move((ArrayList<Combatant>) this.enemiesOnField, this.getArmy(currArmy));
-                this.armiesOnField.get(currArmy).getSoldier(combatant).attack((ArrayList<Combatant>) this.enemiesOnField);
-                this.enemiesOnField.clear();
+                this.armiesOnField.get(currArmy).getSoldier(combatant).move((ArrayList<Combatant>) this.enemiesOnField, this.getArmy(currArmy)); // Move
+                this.armiesOnField.get(currArmy).getSoldier(combatant).attack((ArrayList<Combatant>) this.enemiesOnField); // Attack
+                this.enemiesOnField.clear(); // reset the array of enemies for the next combatant to fill it.
             }
         }
-        for(int i = 0; i < this.getNumArmies(); i++) {
+        for(int i = 0; i < this.getNumArmies(); i++) { // Check to see if an army is dead.
             if(this.getArmy(i).checkDead() >= this.getArmy(i).getArmySize()){
-                this.armiesOnField.remove(this.armiesOnField.get(i));
+                this.armiesOnField.remove(this.armiesOnField.get(i)); // If the army has no combatants alive, remove it from battle.
             }
         }
         if(this.armiesOnField.size() == 1){
-            return 1;
+            return 1; // If only one army is alive, they win, end the simulation.
         }
         else return 0;
     }

@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 public class AnimationThread extends Thread {
 
+	// Initializing variables.
 	private AnimationArea animationArea;  // points to JPanel subclass object
 	private boolean stopper = true;	// toggles animation on and off
 	private int gameOver = 0;

@@ -9,6 +9,8 @@ import java.io.IOException;
  * @author C2C Manuel Riolo
  */
 public class AnimationArea extends JPanel {
+
+    // Initializing variables.
     private Battlefield myBattlefield;
     private int armySize;
     private int numArmies;
@@ -22,11 +24,13 @@ public class AnimationArea extends JPanel {
      * Creates a new AnimationArea with default values.
      */
     public AnimationArea(){
+        // Initialize default values.
         super();
         this.armySize = 10;
         this.numArmies = 2;
         this.armyStrength = 35;
         this.speed = 7;
+        // Create a battlefield with default values.
         myBattlefield = new Battlefield(this.numArmies, this.armySize, this.armyStrength, this.speed, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
@@ -39,7 +43,7 @@ public class AnimationArea extends JPanel {
      * @throws LineUnavailableException For a part of the file not findable.
      */
     public int animate(Graphics g) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        gameOver = myBattlefield.runRound(g);
+        gameOver = myBattlefield.runRound(g); // Run one round and return if someone has won.
         return gameOver;
     }
 
@@ -65,6 +69,7 @@ public class AnimationArea extends JPanel {
      * Restarts the animation to its default values.
      */
     public void restart(){
+        // Replace the current battlefield with a new one.
         myBattlefield = new Battlefield(this.numArmies, this.armySize, this.armyStrength, this.speed, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 

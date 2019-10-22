@@ -111,6 +111,7 @@ public class Army {
      * @return the string value of an armies color
      */
     public String getArmyColor(){
+        // Return the string associated with a color.
         if(this.getSoldier(0).getColor() == Color.red){
             return "Red";
         }
@@ -133,6 +134,7 @@ public class Army {
      * @param speed is the new speed value for the army.
      */
     public void setArmySpeed(int speed){
+        // Go through an army and set all the combatants speed values.
         for(int i = 0; i < this.Army.length; i++){
             this.Army[i].setSpeed(speed);
         }
@@ -143,6 +145,7 @@ public class Army {
      * @param strength is the new strength of an army.
      */
     public void setArmyStrength(int strength){
+        // Go through an army and set all the combatants strength values.
         for(int i = 0; i < this.Army.length; i++){
             this.Army[i].setStrength(strength);
         }
@@ -154,6 +157,7 @@ public class Army {
      */
     public void setArmyColor(String chosenColor){
         Color newColor;
+        // Determine an armies new color based off a passed string.
         switch (chosenColor) {
             case "Blue":
                  newColor = Color.blue;
@@ -171,6 +175,7 @@ public class Army {
                 newColor = Color.black;
                 break;
         }
+        // Go through an army and set all the combatants color.
         for(int i = 0; i < this.Army.length; i++){
             this.Army[i].setColor(newColor);
         }
