@@ -42,12 +42,6 @@ public class Battlefield {
         }
     }
 
-    /*public void draw(Graphics g){
-        for(int i = 0; i < this.armiesOnField.size(); i++){
-            this.armiesOnField.get(i).drawArmy(g);
-        }
-    }*/
-
     /**
      * Gets an army based on passed values.
      * @param armyNum is the index number of the army selected.
@@ -74,7 +68,6 @@ public class Battlefield {
      * @throws LineUnavailableException For a part of the file not findable.
      */
     public int runRound(Graphics g) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        int numArmiesDead = 0;
         for(int currArmy = 0; currArmy < this.getNumArmies(); currArmy++){ // Go through each army
             for(int combatant = 0; combatant < this.getArmiesOnField().get(currArmy).getArmySize(); combatant++){ // Go through each combatant
                 for(int k = 0; k < this.armiesOnField.size(); k++){
@@ -91,7 +84,6 @@ public class Battlefield {
         }
         for(int i = 0; i < this.getNumArmies(); i++) {
             if(this.getArmy(i).checkDead() >= this.getArmy(i).getArmySize()){
-                numArmiesDead++;
                 this.armiesOnField.remove(this.armiesOnField.get(i));
             }
         }
@@ -108,10 +100,4 @@ public class Battlefield {
     public List<Army> getArmiesOnField() {
         return armiesOnField;
     }
-
-    /*public void addArmy(){
-        if(this.getNumArmies() < 4) {
-            this.armiesOnField.add(new Army(2, this.armySize, this.windowWidth, this.windowHeight));
-        }
-    }*/
 }

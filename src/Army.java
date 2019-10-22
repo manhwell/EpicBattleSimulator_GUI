@@ -32,6 +32,7 @@ public class Army {
      * @param team is the team # of the army.
      * @param armySize is the size of an army.
      * @param power is the power of an army.
+     * @param speed is the speed of an army.
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
@@ -127,18 +128,30 @@ public class Army {
         }
     }
 
+    /**
+     * Sets the speed of an army to a passed value.
+     * @param speed is the new speed value for the army.
+     */
     public void setArmySpeed(int speed){
         for(int i = 0; i < this.Army.length; i++){
             this.Army[i].setSpeed(speed);
         }
     }
 
+    /**
+     * Sets the strength of an army to a passed value.
+     * @param strength is the new strength of an army.
+     */
     public void setArmyStrength(int strength){
         for(int i = 0; i < this.Army.length; i++){
             this.Army[i].setStrength(strength);
         }
     }
 
+    /**
+     * Sets the color of an army to a passed value.
+     * @param chosenColor is the new color for the army.
+     */
     public void setArmyColor(String chosenColor){
         Color newColor;
         switch (chosenColor) {

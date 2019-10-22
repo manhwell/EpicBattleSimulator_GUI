@@ -45,6 +45,7 @@ public class Combatant {
      * Generates a new Combatant class based on passed variables.
      * @param team is the team to base the Combatants color on.
      * @param power is the power of a combatant.
+     * @param speed is the speed of a combatant.
      * @param windowWidth is the width of the battlefield.
      * @param windowHeight is the height of the battlefield.
      */
@@ -116,10 +117,18 @@ public class Combatant {
         this.team = team;
     }
 
+    /**
+     * Sets the speed of a combatant.
+     * @param speed is the new speed of the combatant.
+     */
     public void setSpeed(int speed){
         this.speed = speed;
     }
 
+    /**
+     * Sets the strength of a combatant.
+     * @param strength is the new strength of the combatant.
+     */
     public void setStrength(int strength){
         this.strength = strength;
     }
@@ -249,8 +258,8 @@ public class Combatant {
 
     /**
      * Moves a Combatant based on the status and location of both armies
-     * @param enemyArmy The Army() for the enemy.
-     * @param friendlyArmy The Army() for allies.
+     * @param enemyArmy is an array of all the enemies on the field.
+     * @param friendlyArmy the Army() for allies.
      */
     public void move(ArrayList<Combatant> enemyArmy, Army friendlyArmy){
         int speedToken = (int) (Math.random() * 100); // Chance that they will move this turn.
@@ -294,7 +303,7 @@ public class Combatant {
 
     /**
      * Lets a Combatant attack a certain enemy.
-     * @param enemyArmy The Army() for the enemy.
+     * @param enemyArmy is an array of all the enemies on the field.
      * @throws UnsupportedAudioFileException For errors in the audio stream.
      * @throws IOException For a file not found
      * @throws LineUnavailableException For a part of the file not findable.

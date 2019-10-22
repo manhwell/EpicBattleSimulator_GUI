@@ -100,6 +100,10 @@ public class SettingsMenu extends JFrame {
         }
     }
 
+    /**
+     * Handles what to do when the update army button is pressed.
+     * @param ae is the action performed on the update army button.
+     */
     public void updateArmyListener(ActionEvent ae) {
         int selectedArmy = armySelectorComboBox.getSelectedIndex();
         animation.getAnimationArea().getBattlefield().getArmiesOnField().get(selectedArmy).setArmySpeed(speedSlider.getValue());
