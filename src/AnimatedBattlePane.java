@@ -25,20 +25,6 @@ public class AnimatedBattlePane extends JFrame{
     private static int WINDOW_HEIGHT = 600;
     private AnimationThread animation;
 
-    /*private class MyDispatcher implements KeyEventDispatcher {
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-            if (e.getID() == KeyEvent.KEY_PRESSED) {
-                lblReportLabel.setText("Key pressed: " + e.getKeyChar());
-            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-                lblReportLabel.setText("Key released: " + e.getKeyChar());
-            } else if (e.getID() == KeyEvent.KEY_TYPED) {
-                lblReportLabel.setText("Key typed: " + e.getKeyChar());
-            }
-            return false;
-        }
-    }*/
-
     /**
      * Created the battle pane for the simulation.
      * @param args is a command line argument to pass to main.
@@ -73,12 +59,6 @@ public class AnimatedBattlePane extends JFrame{
         contentPane.add(getMyMenuBar()); // Menu bar
         contentPane.add(getDisplayPanel()); // Animation pane
         contentPane.add(pauseButton()); // Pause button
-
-       /* /////////// special keyboard handling //////////////////
-        KeyboardFocusManager manager =
-                KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(new MyDispatcher());
-        /////////// end of special added code //////////////////*/
 
        // Set up the menuBar
         JMenuBar jmb = getMyMenuBar(); // Set the menuBar contents to how its outlined in getMyMenuBar().
